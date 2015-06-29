@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7921551A1AFA824400B73B9A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792155191AFA824400B73B9A /* Constants.swift */; };
+		7921551C1AFA825100B73B9A /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7921551B1AFA825100B73B9A /* Functions.swift */; };
 		79F78D971A695FA7009BFAD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F78D961A695FA7009BFAD4 /* AppDelegate.swift */; };
 		79F78D991A695FA7009BFAD4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79F78D981A695FA7009BFAD4 /* Images.xcassets */; };
 		79F78D9C1A695FA7009BFAD4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F78D9A1A695FA7009BFAD4 /* MainMenu.xib */; };
@@ -24,6 +26,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		792155191AFA824400B73B9A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7921551B1AFA825100B73B9A /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		79F78D911A695FA6009BFAD4 /* Lab Letter 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lab Letter 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F78D951A695FA6009BFAD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79F78D961A695FA7009BFAD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +59,8 @@
 		79F78D881A695FA6009BFAD4 = {
 			isa = PBXGroup;
 			children = (
+				7921551B1AFA825100B73B9A /* Functions.swift */,
+				792155191AFA824400B73B9A /* Constants.swift */,
 				79F78D931A695FA6009BFAD4 /* Lab Letter 2 */,
 				79F78DA41A695FA7009BFAD4 /* Lab Letter 2Tests */,
 				79F78D921A695FA6009BFAD4 /* Products */,
@@ -150,7 +156,7 @@
 		79F78D891A695FA6009BFAD4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Fulgent Wake";
 				TargetAttributes = {
 					79F78D901A695FA6009BFAD4 = {
@@ -206,6 +212,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				79F78D971A695FA7009BFAD4 /* AppDelegate.swift in Sources */,
+				7921551A1AFA824400B73B9A /* Constants.swift in Sources */,
+				7921551C1AFA825100B73B9A /* Functions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,7 +281,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -310,7 +318,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -323,6 +331,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Lab Letter 2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -334,6 +343,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Lab Letter 2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -353,6 +363,7 @@
 				);
 				INFOPLIST_FILE = "Lab Letter 2Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lab Letter 2.app/Contents/MacOS/Lab Letter 2";
 			};
@@ -369,6 +380,7 @@
 				);
 				INFOPLIST_FILE = "Lab Letter 2Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lab Letter 2.app/Contents/MacOS/Lab Letter 2";
 			};
@@ -393,6 +405,7 @@
 				79F78DAD1A695FA7009BFAD4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		79F78DAE1A695FA7009BFAD4 /* Build configuration list for PBXNativeTarget "Lab Letter 2Tests" */ = {
 			isa = XCConfigurationList;
@@ -401,6 +414,7 @@
 				79F78DB01A695FA7009BFAD4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
