@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14D2134" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -51,6 +52,7 @@
                 <outlet property="patientNameView" destination="rIY-GE-G46" id="5si-ZV-80t"/>
                 <outlet property="plateletsView" destination="GCl-LZ-ntf" id="6qR-wu-9KF"/>
                 <outlet property="potassiumView" destination="9vt-9j-1df" id="zLs-8e-OL8"/>
+                <outlet property="printView" destination="cYP-Aw-qDt" id="C9b-7Y-NAW"/>
                 <outlet property="proteinView" destination="lVf-eP-AWb" id="uyI-CI-atQ"/>
                 <outlet property="psaView" destination="cbx-dk-dT5" id="IpS-eC-cbC"/>
                 <outlet property="sedRateView" destination="h0t-pV-KQV" id="QLg-Sp-jee"/>
@@ -716,7 +718,7 @@
             </items>
         </menu>
         <window title="Lab Letter" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="MXC-b3-yoj">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="951" y="195" width="953" height="765"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
@@ -726,7 +728,7 @@
                 <subviews>
                     <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="HTV-rT-zOg">
                         <rect key="frame" x="17" y="703" width="836" height="62"/>
-                        <view key="contentView">
+                        <view key="contentView" id="9J8-nx-Soe">
                             <rect key="frame" x="1" y="1" width="834" height="46"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -785,7 +787,7 @@
                     </box>
                     <box autoresizesSubviews="NO" fixedFrame="YES" title="Blood Count" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="y1n-Sy-IDY">
                         <rect key="frame" x="17" y="637" width="651" height="62"/>
-                        <view key="contentView">
+                        <view key="contentView" id="8Ma-aj-exD">
                             <rect key="frame" x="1" y="1" width="649" height="46"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -863,7 +865,7 @@
                     </box>
                     <box autoresizesSubviews="NO" fixedFrame="YES" title="Diabetes Labs" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="h2k-kz-NIu">
                         <rect key="frame" x="17" y="409" width="678" height="62"/>
-                        <view key="contentView">
+                        <view key="contentView" id="GAY-Tj-0zK">
                             <rect key="frame" x="1" y="1" width="676" height="46"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -922,7 +924,7 @@
                     </box>
                     <box autoresizesSubviews="NO" fixedFrame="YES" title="Thyroid" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="M3y-KK-jtJ">
                         <rect key="frame" x="17" y="245" width="502" height="62"/>
-                        <view key="contentView">
+                        <view key="contentView" id="fq1-o8-0yu">
                             <rect key="frame" x="1" y="1" width="500" height="46"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -997,6 +999,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="takeShowResultsWindow:" target="Voe-Tx-rLC" id="LhK-8y-RDV"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C30-mH-lNx">
                         <rect key="frame" x="747" y="13" width="95" height="32"/>
@@ -1012,7 +1017,7 @@
                     </button>
                     <box autoresizesSubviews="NO" fixedFrame="YES" title="CMP" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="vUE-90-Dx0">
                         <rect key="frame" x="17" y="571" width="919" height="62"/>
-                        <view key="contentView">
+                        <view key="contentView" id="Qqc-8T-hJL">
                             <rect key="frame" x="1" y="1" width="917" height="46"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -1103,7 +1108,7 @@
                     </box>
                     <box autoresizesSubviews="NO" fixedFrame="YES" title="Liver Function" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="ls4-NA-uq8">
                         <rect key="frame" x="17" y="475" width="919" height="92"/>
-                        <view key="contentView">
+                        <view key="contentView" id="eD2-Cj-wvv">
                             <rect key="frame" x="1" y="1" width="917" height="76"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -1245,7 +1250,7 @@
                     </box>
                     <box autoresizesSubviews="NO" fixedFrame="YES" title="Cholesterol" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="gRV-U2-oyn">
                         <rect key="frame" x="17" y="311" width="822" height="94"/>
-                        <view key="contentView">
+                        <view key="contentView" id="FHA-h7-87k">
                             <rect key="frame" x="1" y="1" width="820" height="78"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -1352,7 +1357,7 @@
                     </box>
                     <box autoresizesSubviews="NO" fixedFrame="YES" title="Other Lab Results" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="9uQ-xo-kTc">
                         <rect key="frame" x="17" y="87" width="910" height="154"/>
-                        <view key="contentView">
+                        <view key="contentView" id="EF7-bB-wtr">
                             <rect key="frame" x="1" y="1" width="908" height="138"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -1618,34 +1623,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="903" height="703"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPc-cZ-hwa">
-                        <rect key="frame" x="20" y="61" width="863" height="622"/>
-                        <clipView key="contentView" id="gwn-4B-DjK">
-                            <rect key="frame" x="1" y="1" width="223" height="133"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="GKs-Kp-f8R">
-                                    <rect key="frame" x="0.0" y="0.0" width="223" height="620"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="846" height="620"/>
-                                    <size key="maxSize" width="960" height="10000000"/>
-                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="846" height="620"/>
-                                    <size key="maxSize" width="960" height="10000000"/>
-                                </textView>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Dgp-x0-MQ8">
-                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="gNJ-IH-JOL">
-                            <rect key="frame" x="224" y="1" width="15" height="133"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                    </scrollView>
                     <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yey-wK-sxw">
                         <rect key="frame" x="768" y="13" width="121" height="32"/>
                         <buttonCell key="cell" type="push" title="Print" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="f7V-Kb-UDb">
@@ -1653,20 +1630,56 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="takePrint:" target="Voe-Tx-rLC" id="xPT-EH-sq2"/>
+                            <action selector="print:" target="bnl-xR-9TJ" id="ZcO-WC-4vQ"/>
                         </connections>
                     </button>
+                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bnl-xR-9TJ">
+                        <rect key="frame" x="20" y="20" width="520" height="656"/>
+                        <subviews>
+                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ni4-IP-UXg">
+                                <rect key="frame" x="58" y="87" width="401" height="470"/>
+                                <clipView key="contentView" ambiguous="YES" copiesOnScroll="NO" id="eeU-Ap-3EZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="401" height="470"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView focusRingType="none" ambiguous="YES" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="cYP-Aw-qDt">
+                                            <rect key="frame" x="0.0" y="0.0" width="401" height="470"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="401" height="470"/>
+                                            <size key="maxSize" width="463" height="10000000"/>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="401" height="470"/>
+                                            <size key="maxSize" width="463" height="10000000"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Bpz-N3-pTL">
+                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Kyp-UT-G64">
+                                    <rect key="frame" x="-100" y="-100" width="15" height="456"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <imageView canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rfq-IU-DNH">
+                                <rect key="frame" x="-3" y="-3" width="526" height="662"/>
+                                <imageCell key="cell" enabled="NO" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" image="WPCM Letterhead Blank" id="1dF-Xy-pCi"/>
+                            </imageView>
+                        </subviews>
+                    </customView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="hPc-cZ-hwa" firstAttribute="leading" secondItem="Xwx-8X-5QO" secondAttribute="leading" constant="20" id="Pn0-uc-7di"/>
-                    <constraint firstItem="hPc-cZ-hwa" firstAttribute="top" secondItem="Xwx-8X-5QO" secondAttribute="top" constant="20" id="TI7-f9-IWD"/>
                     <constraint firstAttribute="trailing" secondItem="Yey-wK-sxw" secondAttribute="trailing" constant="20" id="ggi-TG-ec2"/>
-                    <constraint firstItem="Yey-wK-sxw" firstAttribute="top" secondItem="hPc-cZ-hwa" secondAttribute="bottom" constant="20" id="lWY-d0-JaL"/>
-                    <constraint firstAttribute="trailing" secondItem="hPc-cZ-hwa" secondAttribute="trailing" constant="20" id="pCU-b4-vqJ"/>
                     <constraint firstAttribute="bottom" secondItem="Yey-wK-sxw" secondAttribute="bottom" constant="20" id="xCy-Jw-ZXb"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="343.5" y="781.5"/>
+            <point key="canvasLocation" x="16.5" y="605.5"/>
         </window>
     </objects>
+    <resources>
+        <image name="WPCM Letterhead Blank" width="612" height="792"/>
+    </resources>
 </document>

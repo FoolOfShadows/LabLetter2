@@ -62,7 +62,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var other6View: NSTextField!
 	@IBOutlet weak var otherLabView: NSTextField!
 	
+	@IBOutlet var printView: NSTextView!
+	//@IBOutlet weak var printView: NSScrollView!
+	
 	var ptGender = ""
+	var letterString = ""
 	
     @IBAction func takeWBCView(sender: AnyObject) {
     }
@@ -78,7 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
 	@IBAction func takePopulate(sender: AnyObject) {
-		let controlNameVerbiageList = [wbcView:"WBC", hctView:"HEMATOCRIT", plateletsView:"PLATELET COUNT", glucoseView:"GLUCOSE", eGFRAAView:"eGFR AFRICAN AMER.", eGFRNonAAView:"eGFR NON-AFRICAN AMER.", potassiumView:"POTASSIUM", proteinView:"PROTEIN, TOTAL", calculatedGlobView:"CALCULATED GLOBULIN", agRatioView:"CALCULATED A/G RATIO", bilirubinView:"BILIRUBIN, TOTAL", alkPhosphataseView:"ALKALINE PHOSPHATASE", astView:"SGOT (AST)", altView:"SGPT (ALT)", hemoglobinA1cView:"HEMOGLOBIN A1c", averageGlucoseView:"ESTIMATED AVERAGE GLUCOSE", microalbuminView:"MICROALBUMIN, RANDOM", triglyceridesView:"TRIGLYCERIDES", hdlsView:"HDL CHOLESTEROL", ldlsView:"LDL CHOL", ldlConcentrationView:"LDL PARTICLE (P) CONC", smallLDLView:"SMALL LDL-P", tshView:"TSH ", freeT3View:"FREE T3", freeT4View:"FREE T4 (THYROXINE)", ckTotalView:"CK, TOTAL", sedRateView:"SEDIMENTATION RATE", cReactiveProteinView:"C-REACTIVE PROTEIN", cortisolView:"CORTISOL, RANDOM", psaView:"PSA, TOTAL ", vitaminB12View:"VITAMIN B-12", vitaminDView:"VITAMIN D, 25 OH", ironView:"IRON, SERUM"]
+		let controlNameVerbiageList = [wbcView:"WBC", hctView:"HEMATOCRIT", plateletsView:"PLATELET COUNT", eGFRAAView:"eGFR AFRICAN AMER.", eGFRNonAAView:"eGFR NON-AFRICAN AMER.", potassiumView:"POTASSIUM", proteinView:"PROTEIN, TOTAL", calculatedGlobView:"CALCULATED GLOBULIN", agRatioView:"CALCULATED A/G RATIO", bilirubinView:"BILIRUBIN, TOTAL", alkPhosphataseView:"ALKALINE PHOSPHATASE", astView:"SGOT (AST)", altView:"SGPT (ALT)", hemoglobinA1cView:"HEMOGLOBIN A1c", averageGlucoseView:"ESTIMATED AVERAGE GLUCOSE", microalbuminView:"MICROALBUMIN, RANDOM", triglyceridesView:"TRIGLYCERIDES", hdlsView:"HDL CHOLESTEROL", ldlsView:"LDL CHOL", ldlConcentrationView:"LDL PARTICLE (P) CONC", smallLDLView:"SMALL LDL-P", tshView:"TSH", freeT3View:"FREE T3", freeT4View:"FREE T4 (THYROXINE)", ckTotalView:"CK, TOTAL", sedRateView:"SEDIMENTATION RATE", cReactiveProteinView:"C-REACTIVE PROTEIN", cortisolView:"CORTISOL, RANDOM", psaView:"PSA, TOTAL", vitaminB12View:"VITAMIN B-12", vitaminDView:"VITAMIN D, 25 OH", ironView:"IRON, SERUM"]
 		let glucoseVerb = "GLUCOSE"
 		extractValues(controlNameVerbiageList)
 		
@@ -122,44 +126,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	//Extract data from fields which have multiple base matches
 	func extractComplicatedResults() {
 		var theMatch = ""
-		var pasteBoard = NSPasteboard.generalPasteboard()
+		let pasteBoard = NSPasteboard.generalPasteboard()
 		let theClipboard = pasteBoard.stringForType("public.utf8-plain-text")
 		let newText = stripOutExtraWords(theClipboard!)
 		let theSplitClipboard = newText.componentsSeparatedByString("\n")
 		let numberOfLines = theSplitClipboard.count
-		
+		let complicatedTextField: [NSTextField] = [totalCholesterolView, albuminView, creatinineView, glucoseView, hgbView]
+		let complicatedGoodText = ["CHOLESTEROL", "ALBUMIN", "CREATININE", "GLUCOSE", "HEMOGLOBIN"]
+		let badText = ["HDL CHOLESTEROL", "MICROALBUMIN", "URINE", "AVERAGE", "A1"]
+		extractComplicatedValues(complicatedTextField, goodText: complicatedGoodText, badText: badText)
 		if !theSplitClipboard.isEmpty {
 			var lineCount = 0
 			for currentLine in theSplitClipboard {
 				lineCount++
-				if currentLine.rangeOfString("CHOLESTEROL") != nil
-					&& currentLine.rangeOfString("HDL CHOLESTEROL") == nil {
-						regExMatching(currentLine, [totalCholesterolView:"CHOLESTEROL"])
-				}
-				if currentLine.rangeOfString("ALBUMIN") != nil
-					&& currentLine.rangeOfString("MICROALBUMIN") == nil {
-					regExMatching(currentLine, [albuminView:"ALBUMIN"])
-				}
-				if currentLine.rangeOfString("CREATININE") != nil
-					&& currentLine.rangeOfString("MICROALBUMIN") == nil
-					&& currentLine.rangeOfString("URINE") == nil{
-					regExMatching(currentLine, [creatinineView:"CREATININE"])
-				}
-				if currentLine.rangeOfString("HEMOGLOBIN") != nil
-					&& currentLine.rangeOfString("A1C") == nil
-					&& currentLine.rangeOfString("A1c") == nil {
-					regExMatching(currentLine, [hgbView:"HEMOGLOBIN"])
-				}
-				if currentLine.rangeOfString("GLUCOSE") != nil
-					&& currentLine.rangeOfString("AVERAGE") == nil {
-						regExMatching(currentLine, [glucoseView:"GLUCOSE"])
-				}
-				if currentLine.rangeOfString("COLLECTED:") != nil {
-						regExDate(currentLine, [labDateView:"COLLECTED:"])
+				if currentLine.rangeOfString("COLLECTED") != nil {
+						regExDate(currentLine, fieldAndValue: [labDateView:"COLLECTED"])
 				}
 				if currentLine.rangeOfString("yrs") != nil {
 					//What if the file doesn't have the patients gender?
-					let nameLineCount = lineCount - 2
+					let nameLineCount = lineCount - 3
 					let patientName = theSplitClipboard[nameLineCount]
 					patientNameView.stringValue = patientName
 					if (currentLine.rangeOfString("yrs F") != nil) {
@@ -241,10 +226,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		
 		let controlNameArrayTSH = [tshView]
 		var lowArrayTSH = [Double]()
-		let lowArrayTSHM = [0.5]
+		let lowArrayTSHM = [0.3]
 		let lowArrayTSHF = [0.3]
 		var highArrayTSH = [Double]()
-		let highArrayTSHM = [4.7]
+		let highArrayTSHM = [4.2]
 		let highArrayTSHF = [4.2]
 		if ptGender == "F" {
 			lowArrayTSH = lowArrayTSHF
@@ -594,7 +579,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		if (ldlConcentrationString != "") || (smallLDLString != "") {
 			aNewLine = "\n"
 		}
-		var cholesterolResults: String = totalCholesterolString + triglyceridesString + hdlsString + ldlsString + aNewLine + ldlConcentrationString + smallLDLString
+		let cholesterolResults: String = totalCholesterolString + triglyceridesString + hdlsString + ldlsString + aNewLine + ldlConcentrationString + smallLDLString
 		var cholesterolFinal = ""
 		if cholesterolResults != "" {
 			cholesterolFinal = "CHOLESTEROL\n\(cholesterolResults)\n\n"
@@ -612,7 +597,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		var bloodCountResults = ""
 		if bcArrayCount > 0 {
 			if bcArrayCount <= 3 {
-				bloodCountResults = tab.join(bloodCountArray)
+				bloodCountResults = bloodCountArray.joinWithSeparator(tab)
 			} else if bcArrayCount > 3 {
 				bloodCountResults = "\(wbcString)\(tab)\(hgbString)\(tab)\(hctString)\n\(plateletsString)"
 			}
@@ -632,7 +617,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			}
 		}
 		if !cmpResultsArray.isEmpty {
-		cmpResults = tab.join(cmpResultsArray)
+		cmpResults = cmpResultsArray.joinWithSeparator(tab)
 		}
 		var eGFRResults = ""
 		if eGFRAAString != "" {
@@ -658,16 +643,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		let liverArrayCount = liverArray.count
 		var liverResults = ""
 		if liverArrayCount < 4 {
-			liverResults = tab.join(liverArray)
+			liverResults = liverArray.joinWithSeparator(tab)
 		} else if (liverArrayCount > 3) && (liverArrayCount < 7) {
-			var basicLiverArray1 = liverArray[0..<3]
-			var basicLiverArray2 = liverArray[3..<liverArrayCount]
-			liverResults = tab.join(basicLiverArray1) + "\n" + tab.join(basicLiverArray2)
+			let basicLiverArray1 = liverArray[0..<3]
+			let basicLiverArray2 = liverArray[3..<liverArrayCount]
+			liverResults = basicLiverArray1.joinWithSeparator(tab) + "\n" + basicLiverArray2.joinWithSeparator(tab)
 		} else if liverArrayCount > 6 {
-			var basicLiverArray1 = liverArray[0..<3]
-			var basicLiverArray2 = liverArray[3..<6]
-			var basicLiverArray3 = liverArray[6..<liverArrayCount]
-			liverResults = tab.join(basicLiverArray1) + "\n" + tab.join(basicLiverArray2) + "\n" + tab.join(basicLiverArray3)
+			let basicLiverArray1 = liverArray[0..<3]
+			let basicLiverArray2 = liverArray[3..<6]
+			let basicLiverArray3 = liverArray[6..<liverArrayCount]
+			liverResults = basicLiverArray1.joinWithSeparator(tab) + "\n" + basicLiverArray2.joinWithSeparator(tab) + "\n" + basicLiverArray3.joinWithSeparator(tab)
 		}
 		var liverFinal = ""
 		if liverResults != "" {
@@ -686,7 +671,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 				hgbMicroResultsArray.append(i)
 			}
 		}
-		hgbMicroResults = "\n".join(hgbMicroResultsArray)
+		hgbMicroResults = hgbMicroResultsArray.joinWithSeparator("\n")
 		var hgbMicroFinal = ""
 		if hgbMicroResults != "" {
 			hgbMicroFinal = "BLOOD SUGAR AVERAGE/MICROALBUMIN\n\(hgbMicroResults)\n\n"
@@ -702,7 +687,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 				thyroidResultsArray.append(i)
 			}
 		}
-		thyroidResults = tab.join(thyroidResultsArray)
+		thyroidResults = thyroidResultsArray.joinWithSeparator(tab)
 		var thyroidFinal = ""
 		if thyroidResults != "" {
 			thyroidFinal = "THYROID FUNCTION\n\(thyroidResults)\n\n"
@@ -719,29 +704,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		let otherArrayCount = otherArray.count
 		var otherResults = ""
 		if otherArrayCount < 4 {
-			otherResults = tab.join(otherArray)
+			otherResults = otherArray.joinWithSeparator(tab)
 		} else if (otherArrayCount > 3) && (otherArrayCount < 7) {
-			var basicOtherArray1 = otherArray[0..<3]
-			var basicOtherArray2 = otherArray[3..<otherArrayCount]
-			otherResults = tab.join(basicOtherArray1) + "\n" + tab.join(basicOtherArray2)
+			let basicOtherArray1 = otherArray[0..<3]
+			let basicOtherArray2 = otherArray[3..<otherArrayCount]
+			otherResults = basicOtherArray1.joinWithSeparator(tab) + "\n" + basicOtherArray2.joinWithSeparator(tab)
 		} else if (otherArrayCount > 6) && (otherArrayCount < 10) {
-			var basicOtherArray1 = otherArray[0..<3]
-			var basicOtherArray2 = otherArray[3..<6]
-			var basicOtherArray3 = otherArray[6..<otherArrayCount]
-			otherResults = tab.join(basicOtherArray1) + "\n" + tab.join(basicOtherArray2) + "\n" + tab.join(basicOtherArray3)
+			let basicOtherArray1 = otherArray[0..<3]
+			let basicOtherArray2 = otherArray[3..<6]
+			let basicOtherArray3 = otherArray[6..<otherArrayCount]
+			otherResults = basicOtherArray1.joinWithSeparator(tab) + "\n" + basicOtherArray2.joinWithSeparator(tab) + "\n" + basicOtherArray3.joinWithSeparator(tab)
 		} else if (otherArrayCount > 9) && (otherArrayCount < 13) {
-			var basicOtherArray1 = otherArray[0..<3]
-			var basicOtherArray2 = otherArray[3..<6]
-			var basicOtherArray3 = otherArray[6..<9]
-			var basicOtherArray4 = otherArray[9..<otherArrayCount]
-			otherResults = tab.join(basicOtherArray1) + "\n" + tab.join(basicOtherArray2) + "\n" + tab.join(basicOtherArray3) + "\n" + tab.join(basicOtherArray4)
+			let basicOtherArray1 = otherArray[0..<3]
+			let basicOtherArray2 = otherArray[3..<6]
+			let basicOtherArray3 = otherArray[6..<9]
+			let basicOtherArray4 = otherArray[9..<otherArrayCount]
+			otherResults = basicOtherArray1.joinWithSeparator(tab) + "\n" + basicOtherArray2.joinWithSeparator(tab) + "\n" + basicOtherArray3.joinWithSeparator(tab) + "\n" + basicOtherArray4.joinWithSeparator(tab)
 		} else if (otherArrayCount > 12) && (otherArrayCount < 16) {
-			var basicOtherArray1 = otherArray[0..<3]
-			var basicOtherArray2 = otherArray[3..<6]
-			var basicOtherArray3 = otherArray[6..<9]
-			var basicOtherArray4 = otherArray[9..<12]
-			var basicOtherArray5 = otherArray[12..<otherArrayCount]
-			otherResults = tab.join(basicOtherArray1) + "\n" + tab.join(basicOtherArray2) + "\n" + tab.join(basicOtherArray3) + "\n" + tab.join(basicOtherArray4) + "\n" + tab.join(basicOtherArray5)
+			let basicOtherArray1 = otherArray[0..<3]
+			let basicOtherArray2 = otherArray[3..<6]
+			let basicOtherArray3 = otherArray[6..<9]
+			let basicOtherArray4 = otherArray[9..<12]
+			let basicOtherArray5 = otherArray[12..<otherArrayCount]
+			otherResults = basicOtherArray1.joinWithSeparator(tab) + "\n" + basicOtherArray2.joinWithSeparator(tab) + "\n" + basicOtherArray3.joinWithSeparator(tab) + "\n" + basicOtherArray4.joinWithSeparator(tab) + "\n" + basicOtherArray5.joinWithSeparator(tab)
 		}
 		var otherFinal = ""
 		if otherResults != "" {
@@ -750,16 +735,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		
 		
 		//Compose the final letter from the substrings
-		let letterString = "\(letterDateString)\n\n\(patientNameString)\n\n\(labDateString)\n\n\(bloodCountFinal)\(cholesterolFinal)\(hgbMicroFinal)\(cmpFinal)\(liverFinal)\(thyroidFinal)\(otherFinal)\n\nPlease call my office and make an appointment if you have any questions about these results.\nSincerely,\n\nDawn R. Whelchel, M.D."
+		letterString = "\(letterDateString)\n\n\(patientNameString)\n\n\(labDateString)\n\n\(bloodCountFinal)\(cholesterolFinal)\(hgbMicroFinal)\(cmpFinal)\(liverFinal)\(thyroidFinal)\(otherFinal)\n\nPlease call my office and make an appointment if you have any questions about these results.\nSincerely,\n\nDawn R. Whelchel, M.D."
 		
 		//Pass the final results to the clipboard
-		var pasteBoard = NSPasteboard.generalPasteboard()
+		let pasteBoard = NSPasteboard.generalPasteboard()
 		pasteBoard.clearContents()
 		pasteBoard.setString(letterString, forType: NSPasteboardTypeString)
 		
 	}
 	
+	@IBAction func takeShowResultsWindow(sender: AnyObject) {
+		winPrint.makeKeyAndOrderFront(self)
+		self.printView.string = letterString
+	}
 
+	func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
+		return true
+	}
 
 }
 
