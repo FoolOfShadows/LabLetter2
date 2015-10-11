@@ -144,6 +144,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 				}
 				if currentLine.rangeOfString("yrs") != nil {
 					//What if the file doesn't have the patients gender?
+					//Backtrack the line number of the name from the age
 					let nameLineCount = lineCount - 3
 					let patientName = theSplitClipboard[nameLineCount]
 					patientNameView.stringValue = patientName
