@@ -218,7 +218,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		checkValueRangesSingles(controlNameArrayOther, lowValue: lowArrayOther, highValue: highArrayOther)
 		
 		let controlNameArrayEGFR = [eGFRAAView, eGFRNonAAView]
-		let valueArrayEGFR = [60.0, 60.0]
+		let valueArrayEGFR = [59.0, 59.0]
 		checkValueEGFR(controlNameArrayEGFR, theValue: valueArrayEGFR)
 		
 		let controlNameArrayCholPSA = [smallLDLView, ldlConcentrationView, psaView]
@@ -317,9 +317,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		for var i = 0; i < textFields.count; i++ {
 			if !textFields[i].stringValue.isEmpty || textFields[i].stringValue != "" {
 				let baseValue = textFields[i].doubleValue
-				if baseValue < theValue[i] {
+				if baseValue <= theValue[i] {
 					textFields[i].stringValue = "\(textFields[i].stringValue) - Low"
-				} else if baseValue >= theValue[i] {
+				} else if baseValue > theValue[i] {
 					textFields[i].stringValue = "\(textFields[i].stringValue) - Normal"
 				}
 			}
