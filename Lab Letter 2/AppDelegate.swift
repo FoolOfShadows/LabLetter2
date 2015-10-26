@@ -26,6 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var eGFRAAView: NSTextField!
     @IBOutlet weak var eGFRNonAAView: NSTextField!
     @IBOutlet weak var potassiumView: NSTextField!
+	@IBOutlet weak var calciumView: NSTextField!
     @IBOutlet weak var proteinView: NSTextField!
     @IBOutlet weak var albuminView: NSTextField!
     @IBOutlet weak var calculatedGlobView: NSTextField!
@@ -82,7 +83,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
 	@IBAction func takePopulate(sender: AnyObject) {
-		let controlNameVerbiageList = [wbcView:"WBC", hctView:"HEMATOCRIT", plateletsView:"PLATELET COUNT", eGFRAAView:"eGFR AFRICAN AMER.", eGFRNonAAView:"eGFR NON-AFRICAN AMER.", potassiumView:"POTASSIUM", proteinView:"PROTEIN, TOTAL", calculatedGlobView:"CALCULATED GLOBULIN", agRatioView:"CALCULATED A/G RATIO", bilirubinView:"BILIRUBIN, TOTAL", alkPhosphataseView:"ALKALINE PHOSPHATASE", astView:"SGOT (AST)", altView:"SGPT (ALT)", hemoglobinA1cView:"HEMOGLOBIN A1c", averageGlucoseView:"ESTIMATED AVERAGE GLUCOSE", microalbuminView:"MICROALBUMIN, RANDOM", triglyceridesView:"TRIGLYCERIDES", hdlsView:"HDL CHOLESTEROL", ldlsView:"LDL CHOL", ldlConcentrationView:"LDL PARTICLE (P) CONC", smallLDLView:"SMALL LDL-P", tshView:"TSH", freeT3View:"FREE T3", freeT4View:"FREE T4 (THYROXINE)", ckTotalView:"CK, TOTAL", sedRateView:"SEDIMENTATION RATE", cReactiveProteinView:"C-REACTIVE PROTEIN", cortisolView:"CORTISOL, RANDOM", psaView:"PSA, TOTAL", vitaminB12View:"VITAMIN B-12", vitaminDView:"VITAMIN D, 25 OH", ironView:"IRON, SERUM"]
+		let controlNameVerbiageList = [wbcView:"WBC", hctView:"HEMATOCRIT", plateletsView:"PLATELET COUNT", eGFRAAView:"eGFR AFRICAN AMER.", eGFRNonAAView:"eGFR NON-AFRICAN AMER.", potassiumView:"POTASSIUM", calciumView:"CALCIUM", proteinView:"PROTEIN, TOTAL", calculatedGlobView:"CALCULATED GLOBULIN", agRatioView:"CALCULATED A/G RATIO", bilirubinView:"BILIRUBIN, TOTAL", alkPhosphataseView:"ALKALINE PHOSPHATASE", astView:"SGOT (AST)", altView:"SGPT (ALT)", hemoglobinA1cView:"HEMOGLOBIN A1c", averageGlucoseView:"ESTIMATED AVERAGE GLUCOSE", microalbuminView:"MICROALBUMIN, RANDOM", triglyceridesView:"TRIGLYCERIDES", hdlsView:"HDL CHOLESTEROL", ldlsView:"LDL CHOL", ldlConcentrationView:"LDL PARTICLE (P) CONC", smallLDLView:"SMALL LDL-P", tshView:"TSH", freeT3View:"FREE T3", freeT4View:"FREE T4 (THYROXINE)", ckTotalView:"CK, TOTAL", sedRateView:"SEDIMENTATION RATE", cReactiveProteinView:"C-REACTIVE PROTEIN", cortisolView:"CORTISOL, RANDOM", psaView:"PSA, TOTAL", vitaminB12View:"VITAMIN B-12", vitaminDView:"VITAMIN D, 25 OH", ironView:"IRON, SERUM"]
 		let glucoseVerb = "GLUCOSE"
 		extractValues(controlNameVerbiageList)
 		
@@ -110,7 +111,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //Sets all the form fields to an empty string
     func resetFormFields(){
-		let controlNameArray1 = [patientNameView, labDateView, wbcView, hgbView, hctView, plateletsView, glucoseView, creatinineView, eGFRAAView, eGFRNonAAView, potassiumView]
+		let controlNameArray1 = [patientNameView, labDateView, wbcView, hgbView, hctView, plateletsView, glucoseView, creatinineView, eGFRAAView, eGFRNonAAView, potassiumView, calciumView]
 		let controlNameArray2 = [proteinView, albuminView, calculatedGlobView, agRatioView, bilirubinView, alkPhosphataseView, astView, altView, hemoglobinA1cView, averageGlucoseView]
 		let controlNameArray3 = [microalbuminView, totalCholesterolView, triglyceridesView, hdlsView, ldlsView, ldlConcentrationView, smallLDLView, tshView]
 		let controlNameArray4 = [freeT3View, freeT4View, ckTotalView, sedRateView, cReactiveProteinView, cortisolView, psaView, vitaminB12View, vitaminDView]
@@ -176,13 +177,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		}
 		checkValueRangesSingles(controlNameArrayCBC, lowValue: lowArrayCBC, highValue: highArrayCBC)
 		
-		let controlNameArrayCMP = [creatinineView, potassiumView]
+		let controlNameArrayCMP = [creatinineView, potassiumView, calciumView]
 		var lowArrayCMP = [Double]()
-		let lowArrayCMPF = [0.6, 3.5]
-		let lowArrayCMPM = [0.8, 3.5]
+		let lowArrayCMPF = [0.6, 3.5, 8.5]
+		let lowArrayCMPM = [0.8, 3.5, 8.5]
 		var highArrayCMP = [Double]()
-		let highArrayCMPF = [1.3, 5.3]
-		let highArrayCMPM = [1.4, 5.3]
+		let highArrayCMPF = [1.3, 5.3, 10.5]
+		let highArrayCMPM = [1.4, 5.3, 10.5]
 		if ptGender == "F" {
 			lowArrayCMP = lowArrayCMPF
 			highArrayCMP = highArrayCMPF
@@ -382,7 +383,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	//Based on the contents of the form, create the verbiage for the actual letter
 	func createLetterVerbiage() {
-		let tab = "        "
+		let tab = "    "
 		let letterDateString = "\(letterDateView.stringValue)"
 		let patientNameString = "Dear \(patientNameView.stringValue),"
 //		let labDate1 = labDateView.stringValue
@@ -439,6 +440,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		var potassiumString = ""
 		if !potassiumView.stringValue.isEmpty || potassiumView.stringValue != "" {
 			potassiumString = "Potassium: \(potassiumView.stringValue)"
+		}
+		var calciumString = ""
+		if !calciumView.stringValue.isEmpty || calciumView.stringValue != "" {
+			calciumString = "Calcium: \(calciumView.stringValue)"
 		}
 		var eGFRAAString = ""
 		if !eGFRAAView.stringValue.isEmpty || eGFRAAView.stringValue != "" {
@@ -611,7 +616,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			//CMP
 		var cmpResults = ""
 		var cmpResultsArray = [String]()
-		let cmpArray = [glucoseString, creatinineString, potassiumString]
+		let cmpArray = [glucoseString, creatinineString, potassiumString, calciumString]
 		for i in cmpArray {
 			if i != "" {
 				cmpResultsArray.append(i)
