@@ -55,40 +55,56 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var vitaminB12View: NSTextField!
     @IBOutlet weak var vitaminDView: NSTextField!
     @IBOutlet weak var ironView: NSTextField!
+	@IBOutlet weak var uricAcidView: NSTextField!
+	@IBOutlet weak var inrView: NSTextField!
+	@IBOutlet weak var folicAcidView: NSTextField!
+	@IBOutlet weak var ferritinView: NSTextField!
+	@IBOutlet weak var magnesiumView: NSTextField!
+	@IBOutlet weak var ldhView: NSTextField!
+	@IBOutlet weak var lipaseView: NSTextField!
+	@IBOutlet weak var amylaseView: NSTextField!
+	@IBOutlet weak var hPyloriView: NSTextField!
+	@IBOutlet weak var rheumatoidFactorView: NSTextField!
+	@IBOutlet weak var antiNuclearView: NSTextField!
+	@IBOutlet weak var reticulocyteView: NSTextField!
+	
     @IBOutlet weak var other1View: NSTextField!
     @IBOutlet weak var other2View: NSTextField!
     @IBOutlet weak var other3View: NSTextField!
     @IBOutlet weak var other4View: NSTextField!
     @IBOutlet weak var other5View: NSTextField!
     @IBOutlet weak var other6View: NSTextField!
-	@IBOutlet weak var otherLabView: NSTextField!
 	
 	@IBOutlet var printView: NSTextView!
-	//@IBOutlet weak var printView: NSScrollView!
 	
-	var ptGender = ""
 	var letterString = ""
 	
-    @IBAction func takeWBCView(sender: AnyObject) {
-    }
-    @IBAction func takeProteinView(sender: AnyObject) {
-    }
-    
     @IBAction func takeClear(sender: AnyObject) {
      resetFormFields()
     }
+	
     @IBAction func takeProcess(sender: AnyObject) {
-		createLetterVerbiage()
-		NSWorkspace.sharedWorkspace().launchApplication("PDFPen 6")
+		generateSectionResultsString()
+		generateDiabetesSectionResults()
+		generateCholesterolSectionResults()
+		
+		if let theLabLetter = MyVariables.theLabLetter {
+			theLabLetter.buildLetter()
+		}
     }
     
 	@IBAction func takePopulate(sender: AnyObject) {
-		let controlNameVerbiageList = [wbcView:"WBC", hctView:"HEMATOCRIT", plateletsView:"PLATELET COUNT", eGFRAAView:"eGFR AFRICAN AMER.", eGFRNonAAView:"eGFR NON-AFRICAN AMER.", potassiumView:"POTASSIUM", calciumView:"CALCIUM", proteinView:"PROTEIN, TOTAL", calculatedGlobView:"CALCULATED GLOBULIN", agRatioView:"CALCULATED A/G RATIO", bilirubinView:"BILIRUBIN, TOTAL", alkPhosphataseView:"ALKALINE PHOSPHATASE", astView:"SGOT (AST)", altView:"SGPT (ALT)", hemoglobinA1cView:"HEMOGLOBIN A1c", averageGlucoseView:"ESTIMATED AVERAGE GLUCOSE", microalbuminView:"MICROALBUMIN, RANDOM", triglyceridesView:"TRIGLYCERIDES", hdlsView:"HDL CHOLESTEROL", ldlsView:"LDL CHOL", ldlConcentrationView:"LDL PARTICLE (P) CONC", smallLDLView:"SMALL LDL-P", tshView:"TSH", freeT3View:"FREE T3", freeT4View:"FREE T4 (THYROXINE)", ckTotalView:"CK, TOTAL", sedRateView:"SEDIMENTATION RATE", cReactiveProteinView:"C-REACTIVE PROTEIN", cortisolView:"CORTISOL, RANDOM", psaView:"PSA, TOTAL", vitaminB12View:"VITAMIN B-12", vitaminDView:"VITAMIN D, 25 OH", ironView:"IRON, SERUM"]
-		let glucoseVerb = "GLUCOSE"
-		extractValues(controlNameVerbiageList)
-		
-		extractComplicatedResults()
-		checkValuePrep()
+		//Extract the raw data from the PracticeFusion text in the clipboard and set the fields of the form accordingly
+		if let theCompleteLabData = MyVariables.completeLabData {
+			if let thisPatient = MyVariables.thePatient {
+				extractValues(theCompleteLabData.returnAllTheLabsButHGB(), thePatient: thisPatient, wordsToRemove: extraPhrases)
+			}
+		}
+		if let theHGBLabData = MyVariables.completeLabData?.hgbLab {
+			if let thisPatient = MyVariables.thePatient {
+				extractValues([theHGBLabData], thePatient: thisPatient, wordsToRemove: moreExtraPhrases)
+			}
+		}
 	}
 	
 	@IBAction func takePrint(sender: AnyObject) {
@@ -97,12 +113,88 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
+		resetFormFields()
+		
+		MyVariables.thePatient = PatientData(nameField: patientNameView, dateField: labDateView)
+		
+		//Blood Count
+		let wbcLab = LabDataWithHighLow(controller: wbcView, idText: "WBC", highFemale: wbcHighF, lowFemale: wbcLowF, highMale: wbcHighM, lowMale: wbcLowM, outputTitle: "White Blood Count:")
+		let hctLab = LabDataWithHighLow(controller: hctView, idText: "HEMATOCRIT", highFemale: hctHighF, lowFemale: hctLowF, highMale: hctHighM, lowMale: hctLowM, outputTitle: "Hematocrit:")
+		let hgbLab = LabDataWithHighLow(controller: hgbView, idText: "HEMOGLOBIN", highFemale: hgbHighF, lowFemale: hgbLowF, highMale: hgbHighM, lowMale: hgbLowM, outputTitle: "Hemoglobin:")
+		let plateletsLab = LabDataWithHighLow(controller: plateletsView, idText: "PLATELET COUNT", highFemale: plateletsHighF, lowFemale: plateletsLowF, highMale: plateletsHighM, lowMale: plateletsLowM, outputTitle: "Platelets:")
+		
+		//CMP
+		let glucoseLab = LabDataGlucose(controller: glucoseView, idText: "GLUCOSE", highFemale: glucoseHighF, lowFemale: glucoseLowF, highMale: glucoseHighM, lowMale: glucoseLowM, borderlineFemale: glucoseBorderlineF, borderlineMale: glucoseBorderlineM, outputTitle: "Glucose:")
+		let creatinineLab = LabDataWithHighLow(controller: creatinineView, idText: "CREATININE", highFemale: creatinineHighF, lowFemale: creatinineLowF, highMale: creatinineHighM, lowMale: creatinineLowM, outputTitle: "Creatinine:")
+		let eGFRAALab = LabDataWithHighLow(controller: eGFRAAView, idText: "eGFR AFRICAN AMER.", highFemale: eGFRAAHighF, lowFemale: eGFRAALowF, highMale: eGFRAAHighM, lowMale: eGFRAALowM, outputTitle: "eGFR African American:")
+		let eGFRNonAALab = LabDataWithHighLow(controller: eGFRNonAAView, idText: "eGFR NON-AFRICAN AMER.", highFemale: eGFRNonAAHighF, lowFemale: eGFRNonAALowF, highMale: eGFRNonAAHighM, lowMale: eGFRNonAALowM, outputTitle: "eGFR Non-African American:")
+		let potassiumLab = LabDataWithHighLow(controller: potassiumView, idText: "POTASSIUM", highFemale: potassiumHighF, lowFemale: potassiumLowF, highMale: potassiumHighM, lowMale: potassiumLowM, outputTitle: "Potassium:")
+		let calciumLab = LabDataWithHighLow(controller: calciumView, idText: "CALCIUM", highFemale: calciumHighF, lowFemale: calciumLowF, highMale: calciumHighM, lowMale: calciumLowM, outputTitle: "Calcium:")
+		
+		//Liver Function
+		let proteinLab = LabDataWithHighLow(controller: proteinView, idText: "PROTEIN, TOTAL", highFemale: proteinHighF, lowFemale: proteinLowF, highMale: proteinHighM, lowMale: proteinLowM, outputTitle: "Protein:")
+		let albuminLab = LabDataWithHighLow(controller: albuminView, idText: "ALBUMIN", highFemale: albuminHighF, lowFemale: albuminLowF, highMale: albuminHighM, lowMale: albuminLowM, outputTitle: "Albumin:")
+		let calculatedGlobLab = LabDataWithHighLow(controller: calculatedGlobView, idText: "CALCULATED GLOBULIN", highFemale: globHighF, lowFemale: globLowF, highMale: globHighM, lowMale: globLowM, outputTitle: "Globulin:")
+		let agRatioLab = LabDataWithHighLow(controller: agRatioView, idText: "CALCULATED A/G RATIO", highFemale: agRatioHighF, lowFemale: agRatioLowF, highMale: agRatioHighM, lowMale: agRatioLowM, outputTitle: "A/G Ratio:")
+		let bilirubinLab = LabDataWithHighLow(controller: bilirubinView, idText: "BILIRUBIN, TOTAL", highFemale: biliHighF, lowFemale: biliLowF, highMale: biliHighM, lowMale: biliLowM, outputTitle: "Bilirubin:")
+		let alkPhosphataseLab = LabDataWithHighLow(controller: alkPhosphataseView, idText: "ALKALINE PHOSPHATASE", highFemale: alkPhosHighF, lowFemale: alkPhosLowF, highMale: alkPhosHighM, lowMale: alkPhosLowM, outputTitle: "Alk Phosphatase:")
+		let astLab = LabDataWithHighLow(controller: astView, idText: "SGOT (AST)", highFemale: astHighF, lowFemale: astLowF, highMale: astHighM, lowMale: astLowM, outputTitle: "SGOT (AST):")
+		let altLab = LabDataWithHighLow(controller: altView, idText: "SGPT (ALT)", highFemale: altHighF, lowFemale: altLowF, highMale: altHighM, lowMale: altLowM, outputTitle: "SGPT (ALT):")
+		
+		//Diabetes Labs - Simple
+		let hba1cLab = LabData(controller: hemoglobinA1cView, idText: "HEMOGLOBIN A1c")
+		let aveGlucoseLab = LabData(controller: averageGlucoseView, idText: "ESTIMATED AVERAGE GLUCOSE")
+		// - Complex
+		let microalbuminLab = LabDataWithHighLow(controller: microalbuminView, idText: "CALC MICROALB/CREAT RND", highFemale: microAlbHighF, lowFemale: microAlbLowF, highMale: microAlbHighM, lowMale: microAlbLowM, outputTitle: "Urine Microalbumin:")
+		
+		//Cholesterol - Simple
+		let totalCholesterolLab = LabData(controller: totalCholesterolView, idText: "CHOLESTEROL")
+		let triglyceridesLab = LabData(controller: triglyceridesView, idText: "TRIGLYCERIDES")
+		let hdlLab = LabData(controller: hdlsView, idText: "HDL CHOLESTEROL")
+		let ldlLab = LabData(controller: ldlsView, idText: "CALCULATED LDL CHOL")
+		// - Complex
+		let ldlConcentrationLab = LabDataWithHighLow(controller: ldlConcentrationView, idText: "LDL PARTICLE (P) CONC", highFemale: ldlConcHighF, lowFemale: ldlConcLowF, highMale: ldlConcHighM, lowMale: ldlConcLowM, outputTitle: "LDL Particle Concentration:")
+		let smallLDLLab = LabDataWithHighLow(controller: smallLDLView, idText: "SMALL LDL-P", highFemale: smallLDLHighF, lowFemale: smallLDLLowF, highMale: smallLDLHighM, lowMale: smallLDLLowM, outputTitle: "Small Dense LDL:")
+		
+		//Thyroid
+		let tshLab = LabDataTSH(controller: tshView, idText: "TSH", highFemale: tshHighF, lowFemale: tshLowF, highMale: tshHighM, lowMale: tshLowM, outputTitle: "TSH:")
+		let freeT3Lab = LabDataWithHighLow(controller: freeT3View, idText: "FREE T3", highFemale: freeT3HighF, lowFemale: freeT3LowF, highMale: freeT3HighM, lowMale: freeT3LowM, outputTitle: "Free T3:")
+		let freeT4Lab = LabDataWithHighLow(controller: freeT4View, idText: "FREE T4 (THYROXINE)", highFemale: freeT4HighF, lowFemale: freeT4LowF, highMale: freeT4HighM, lowMale: freeT4LowM, outputTitle: "Free T4:")
+		
+		//Other
+		let ckLab = LabDataWithHighLow(controller: ckTotalView, idText: "CK, TOTAL", highFemale: ckHighF, lowFemale: ckLowF, highMale: ckHighM, lowMale: ckLowM, outputTitle: "Creatinine Kinase:")
+		let sedRateLab = LabDataWithHighLow(controller: sedRateView, idText: "SEDIMENTATION RATE", highFemale: sedHighF, lowFemale: sedLowF, highMale: sedHighM, lowMale: sedLowM, outputTitle: "Sedimentation Rate:")
+		let cReactiveProteinLab = LabDataWithHighLow(controller: cReactiveProteinView, idText: "C-REACTIVE PROTEIN", highFemale: cReactiveHighF, lowFemale: cReactiveLowF, highMale: cReactiveHighM, lowMale: cReactiveLowM, outputTitle: "C-Reactive Protein:")
+		let cortisolLab = LabDataWithHighLow(controller: cortisolView, idText: "CORTISOL, RANDOM", highFemale: cortisolHighF, lowFemale: cortisolLowF, highMale: cortisolHighM, lowMale: cortisolLowM, outputTitle: "Cortisol:")
+		let vitaminB12Lab = LabDataWithHighLow(controller: vitaminB12View, idText: "VITAMIN B-12", highFemale: b12HighF, lowFemale: b12LowF, highMale: b12HighM, lowMale: b12LowM, outputTitle: "Vitamin B12:")
+		let vitaminDLab = LabDataWithHighLow(controller: vitaminDView, idText: "VITAMIN D, 25 OH", highFemale: dHighF, lowFemale: dLowF, highMale: dHighM, lowMale: dLowM, outputTitle: "Vitamin D:")
+		let ironLab = LabDataWithHighLow(controller: ironView, idText: "IRON, SERUM", highFemale: ironHighF, lowFemale: ironLowF, highMale: ironHighM, lowMale: ironLowM, outputTitle: "Iron:")
+		let psaLab = LabDataWithHighLow(controller: psaView, idText: "PSA, TOTAL", highFemale: psaHighF, lowFemale: psaLowF, highMale: psaHighM, lowMale: psaLowM, outputTitle: "PSA:")
+		let uricAcidLab = LabDataWithHighLow(controller: uricAcidView, idText: "URIC ACID", highFemale: uricAcidHighF, lowFemale: uricAcidLowF, highMale: uricAcidHighM, lowMale: uricAcidLowM, outputTitle: "Uric Acid:")
+		let folicAcidLab = LabDataWithHighLow(controller: folicAcidView, idText: "FOLIC ACID", highFemale: folicAcidHighF, lowFemale: folicAcidLowF, highMale: folicAcidHighM, lowMale: folicAcidLowM, outputTitle: "Folic Acid:")
+		let ferritinLab = LabDataWithHighLow(controller: ferritinView, idText: "FERRITIN", highFemale: ferritinHighF, lowFemale: ferritinLowF, highMale: ferritinHighM, lowMale: ferritinLowM, outputTitle: "Ferritin:")
+		let magnesiumLab = LabDataWithHighLow(controller: magnesiumView, idText: "MAGNESIUM", highFemale: magnesiumHighF, lowFemale: magnesiumLowF, highMale: magnesiumHighM, lowMale: magnesiumLowM, outputTitle: "Magnesium:")
+		let ldhLab = LabDataWithHighLow(controller: ldhView, idText: "LDH", highFemale: ldhHighF, lowFemale: ldhLowF, highMale: ldhHighM, lowMale: ldhLowM, outputTitle: "LDH:")
+		let lipaseLab = LabDataWithHighLow(controller: lipaseView, idText: "LIPASE", highFemale: lipaseHighF, lowFemale: lipaseLowF, highMale: lipaseHighM, lowMale: lipaseLowM, outputTitle: "Lipase:")
+		let amylaseLab = LabDataWithHighLow(controller: amylaseView, idText: "AMYLASE", highFemale: amylaseHighF, lowFemale: amylaseLowF, highMale: amylaseHighM, lowMale: amylaseLowM, outputTitle: "Amylase:")
+		let rheumatoidFactorLab = LabDataWithHighLow(controller: rheumatoidFactorView, idText: "RHEUMATOID FACTOR, QUANT", highFemale: rheumatoidFactorHighF, lowFemale: rheumatoidFactorLowF, highMale: rheumatoidFactorHighM, lowMale: rheumatoidFactorLowM, outputTitle: "Rheumatoid Factor:")
+		let reticulocyteLab = LabDataWithHighLow(controller: reticulocyteView, idText: "RETICULOCYTE", highFemale: reticulocyteHighF, lowFemale: reticulocyteLowF, highMale: reticulocyteHighM, lowMale: reticulocyteLowM, outputTitle: "Reticulocyte Count")
+		
+		
+		//Populate the completeLabData variable with all the lab objects
+		MyVariables.completeLabData = AllTheLabs(wbcLab: wbcLab, hgbLab: hgbLab, hctLab: hctLab, plateletsLab: plateletsLab, glucoseLab: glucoseLab, creatinineLab: creatinineLab, potassiumLab: potassiumLab, eGFRAALab: eGFRAALab, eGFRNonAALab: eGFRNonAALab, calciumLab: calciumLab, proteinLab: proteinLab, albuminLab: albuminLab, calculatedGlobLab: calculatedGlobLab, agRatioLab: agRatioLab, bilirubinLab: bilirubinLab, alkPhosphataseLab: alkPhosphataseLab, astLab: astLab, altLab: altLab, microalbuminLab: microalbuminLab, ldlConcentrationLab: ldlConcentrationLab, smallLDLLab: smallLDLLab, freeT3Lab: freeT3Lab, freeT4Lab: freeT4Lab, totalCholesterolLab: totalCholesterolLab, triglyceridesLab: triglyceridesLab, hdlLab: hdlLab, ldlLab: ldlLab, hba1cLab: hba1cLab, aveGlucoseLab: aveGlucoseLab, ckLab: ckLab, sedRateLab: sedRateLab, cReactiveProteinLab: cReactiveProteinLab, cortisolLab: cortisolLab, vitaminB12Lab: vitaminB12Lab, vitaminDLab: vitaminDLab, ironLab: ironLab, tshLab: tshLab, psaLab: psaLab, uricAcidLab: uricAcidLab, folicAcidLab: folicAcidLab, ferritinLab: ferritinLab, magnesiumLab: magnesiumLab, ldhLab: ldhLab, lipaseLab: lipaseLab, amylaseLab: amylaseLab, rheumatoidFactorLab: rheumatoidFactorLab, reticulocyteLab: reticulocyteLab, unlabeledLabs:[other1View, other2View, other3View, other4View, other5View, other6View])
+		//Instantiate a LabLetter object to collect the letter parts
+		MyVariables.theLabLetter = LabLetter(letterDateField: letterDateView)
+		
+		
         //Get current date and format it
         let formatter = NSDateFormatter()
         formatter.dateFormat = "MMMM d, YYYY"
         let todaysDate: String = formatter.stringFromDate(NSDate())
         letterDateView.stringValue = todaysDate
-    resetFormFields()
+		if let thisLabLetter = MyVariables.theLabLetter {
+				thisLabLetter.letterDate = todaysDate
+		}
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
@@ -110,644 +202,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     //Sets all the form fields to an empty string
-    func resetFormFields(){
-		let controlNameArray1 = [patientNameView, labDateView, wbcView, hgbView, hctView, plateletsView, glucoseView, creatinineView, eGFRAAView, eGFRNonAAView, potassiumView, calciumView]
-		let controlNameArray2 = [proteinView, albuminView, calculatedGlobView, agRatioView, bilirubinView, alkPhosphataseView, astView, altView, hemoglobinA1cView, averageGlucoseView]
-		let controlNameArray3 = [microalbuminView, totalCholesterolView, triglyceridesView, hdlsView, ldlsView, ldlConcentrationView, smallLDLView, tshView]
-		let controlNameArray4 = [freeT3View, freeT4View, ckTotalView, sedRateView, cReactiveProteinView, cortisolView, psaView, vitaminB12View, vitaminDView]
-		let controlNameArray5 = [ironView, other1View, other2View, other3View, other4View, other5View, other6View, otherLabView]
-		clearFields(controlNameArray1)
-		clearFields(controlNameArray2)
-		clearFields(controlNameArray3)
-		clearFields(controlNameArray4)
-		clearFields(controlNameArray5)
-		ptGender = ""
-        }
-	
-	//Extract data from fields which have multiple base matches
-	func extractComplicatedResults() {
-		var theMatch = ""
-		let pasteBoard = NSPasteboard.generalPasteboard()
-		let theClipboard = pasteBoard.stringForType("public.utf8-plain-text")
-		let newText = stripOutExtraWords(theClipboard!)
-		let theSplitClipboard = newText.componentsSeparatedByString("\n")
-		let numberOfLines = theSplitClipboard.count
-		let complicatedTextField: [NSTextField] = [totalCholesterolView, albuminView, creatinineView, glucoseView, hgbView]
-		let complicatedGoodText = ["CHOLESTEROL", "ALBUMIN", "CREATININE", "GLUCOSE", "HEMOGLOBIN"]
-		let badText = ["HDL CHOLESTEROL", "MICROALBUMIN", "URINE", "AVERAGE", "A1"]
-		extractComplicatedValues(complicatedTextField, goodText: complicatedGoodText, badText: badText)
-		if !theSplitClipboard.isEmpty {
-			var lineCount = 0
-			for currentLine in theSplitClipboard {
-				lineCount++
-				if currentLine.rangeOfString("COLLECTED") != nil {
-						regExDate(currentLine, fieldAndValue: [labDateView:"COLLECTED"])
-				}
-				if currentLine.rangeOfString("yrs") != nil {
-					//What if the file doesn't have the patients gender?
-					//Backtrack the line number of the name from the age
-					let nameLineCount = lineCount - 3
-					let patientName = theSplitClipboard[nameLineCount]
-					patientNameView.stringValue = patientName
-					if (currentLine.rangeOfString("yrs F") != nil) {
-						ptGender = "F"
-					} else if currentLine.rangeOfString("yrs M") != nil {
-						ptGender = "M"
-					}
-				}
-			}
-		}
-	}
-	
-	//Hold the sets used to determine hi/low, etc. and run the various functions using the sets
-	func checkValuePrep () {
-		let controlNameArrayCBC = [wbcView, hgbView, hctView, plateletsView]
-		var lowArrayCBC = [Double]()
-		let lowArrayCBCF = [4.0, 11.5, 34.0, 130.0]
-		let lowArrayCBCM = [4.0, 13.0, 37.0, 130.0]
-		var highArrayCBC = [Double]()
-		let highArrayCBCF = [11.0,15.5,45.0,400.0]
-		let highArrayCBCM = [11.0, 17.0, 49.0, 400.0]
-		if ptGender == "F" {
-			lowArrayCBC = lowArrayCBCF
-			highArrayCBC = highArrayCBCF
-		} else if ptGender == "M" {
-			lowArrayCBC = lowArrayCBCM
-			highArrayCBC = highArrayCBCM
-		}
-		checkValueRangesSingles(controlNameArrayCBC, lowValue: lowArrayCBC, highValue: highArrayCBC)
-		
-		let controlNameArrayCMP = [creatinineView, potassiumView, calciumView]
-		var lowArrayCMP = [Double]()
-		let lowArrayCMPF = [0.6, 3.5, 8.5]
-		let lowArrayCMPM = [0.8, 3.5, 8.5]
-		var highArrayCMP = [Double]()
-		let highArrayCMPF = [1.3, 5.3, 10.5]
-		let highArrayCMPM = [1.4, 5.3, 10.5]
-		if ptGender == "F" {
-			lowArrayCMP = lowArrayCMPF
-			highArrayCMP = highArrayCMPF
-		} else if ptGender == "M" {
-			lowArrayCMP = lowArrayCMPM
-			highArrayCMP = highArrayCMPM
-		}
-		checkValueRangesSingles(controlNameArrayCMP, lowValue: lowArrayCMP, highValue: highArrayCMP)
-		
-		checkValueGlucose()
-		
-		
-		
-		let controlNameArrayLiver = [proteinView, albuminView, calculatedGlobView, agRatioView, bilirubinView, alkPhosphataseView, astView, altView]
-		let lowArrayLiver = [6.0, 2.9, 2.0, 0.9, 0.1, 30, 5, 7]
-		let highArrayLiver = [8.4,5.0,3.8,2.5,1.3,132,35,56]
-		checkValueRangesSingles(controlNameArrayLiver, lowValue: lowArrayLiver, highValue: highArrayLiver)
-		
-		let controlNameArrayOther = [ironView, microalbuminView, freeT3View, freeT4View, ckTotalView, sedRateView, cReactiveProteinView, cortisolView, vitaminB12View, vitaminDView]
-		var lowArrayOther = [Double]()
-		let lowArrayOtherF = [35, 0.0, 2.3, 0.73, 30.0, 0.0, 0.0, 2.0, 243.0, 30.0]
-		let lowArrayOtherM = [35, 0.0, 2.3, 0.73, 30.0, 0.0, 0.0, 2.0, 243.0, 30.0]
-		var highArrayOther = [Double]()
-		let highArrayOtherF = [145, 1.8,4.2,1.95,200.0,20.0,0.5,25.0,894.0,100.0]
-		let highArrayOtherM = [145, 1.8,4.2,1.95,200.0,20.0,0.8,25.0,894.0,100.0]
-		if ptGender == "F" {
-			lowArrayOther = lowArrayOtherF
-			highArrayOther = highArrayOtherF
-		}else if ptGender == "M" {
-			lowArrayOther = lowArrayOtherM
-			highArrayOther = highArrayOtherM
-		}
-		checkValueRangesSingles(controlNameArrayOther, lowValue: lowArrayOther, highValue: highArrayOther)
-		
-		let controlNameArrayEGFR = [eGFRAAView, eGFRNonAAView]
-		let valueArrayEGFR = [59.0, 59.0]
-		checkValueEGFR(controlNameArrayEGFR, theValue: valueArrayEGFR)
-		
-		let controlNameArrayCholPSA = [smallLDLView, ldlConcentrationView, psaView]
-		let valueArrayChol = [528.0, 1000.0, 4.0]
-		checkValueChol(controlNameArrayCholPSA, theValue: valueArrayChol)
-		
-		let controlNameArrayTSH = [tshView]
-		var lowArrayTSH = [Double]()
-		let lowArrayTSHM = [0.3]
-		let lowArrayTSHF = [0.3]
-		var highArrayTSH = [Double]()
-		let highArrayTSHM = [4.2]
-		let highArrayTSHF = [4.2]
-		if ptGender == "F" {
-			lowArrayTSH = lowArrayTSHF
-			highArrayTSH = highArrayTSHF
-		} else if ptGender == "M" {
-			lowArrayTSH = lowArrayTSHM
-			highArrayTSH = highArrayTSHM
-		}
-		checkValueRangesTSH(controlNameArrayTSH, lowValue: lowArrayTSH, highValue: highArrayTSH)
-		
-		checkGroupForNormal(controlNameArrayCBC)
-		checkGroupForNormal(controlNameArrayLiver)
-	}
-	
-	//Check and set the hi/low values of the normal tests
-	func checkValueRangesSingles(textFields:[NSTextField!], lowValue: [Double], highValue: [Double]) {
-		for var i = 0; i < textFields.count; i++ {
-			if !textFields[i].stringValue.isEmpty || textFields[i].stringValue != "" {
-				let baseValue = textFields[i].doubleValue
-				//let low = lowValue[i]
-				if baseValue < lowValue[i] {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - Low"
-				} else if baseValue > highValue[i] {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - High"
-				} else {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - Normal"
-				}
-			}
-		}
-	}
-	
-	//Check and set the under/over active values of the thyroid test
-	func checkValueRangesTSH(textFields:[NSTextField!], lowValue: [Double], highValue: [Double]) {
-		for var i = 0; i < textFields.count; i++ {
-			if !textFields[i].stringValue.isEmpty || textFields[i].stringValue != "" {
-				let baseValue = textFields[i].doubleValue
-				//let low = lowValue[i]
-				if baseValue < lowValue[i] {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - Overactive"
-				} else if baseValue > highValue[i] {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - Underactive"
-				} else {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - Normal"
-				}
-			}
-		}
-	}
-	
-	func checkValueRangesGroup(textFields:[NSTextField!], lowValue: [Double], highValue: [Double]) {
-		for var i = 0; i < textFields.count; i++ {
-			if !textFields[i].stringValue.isEmpty || textFields[i].stringValue != "" {
-				let baseValue = textFields[i].doubleValue
-				let low = lowValue[i]
-				if baseValue < lowValue[i] {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - Low"
-				} else if baseValue > highValue[i] {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - High"
-				} else {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - Normal"
-				}
-			}
-		}
-	}
-	
-	//Check Glucose results for normalcy
-	func checkValueGlucose() {
-		let glucoseValue = glucoseView.integerValue
-		if !glucoseView.stringValue.isEmpty || glucoseView.stringValue != "" {
-			switch glucoseValue {
-			case 0..<65 :
-				glucoseView.stringValue = "\(glucoseView.stringValue) - Low"
-			case 65..<101 :
-				glucoseView.stringValue = "\(glucoseView.stringValue) - Normal"
-			case 101..<105 :
-				glucoseView.stringValue = "\(glucoseView.stringValue) - Borderline High"
-			default :
-				glucoseView.stringValue = "\(glucoseView.stringValue) - High"
-			}
-		}
-	}
-	
-	//Check eGFR results for normalcy
-	func checkValueEGFR(textFields:[NSTextField!], theValue:[Double]) {
-		for var i = 0; i < textFields.count; i++ {
-			if !textFields[i].stringValue.isEmpty || textFields[i].stringValue != "" {
-				let baseValue = textFields[i].doubleValue
-				if baseValue <= theValue[i] {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - Low"
-				} else if baseValue > theValue[i] {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - Normal"
-				}
-			}
-		}
-	}
-	
-	//Check Cholesterol results for normalcy
-	func checkValueChol(textFields:[NSTextField!], theValue:[Double]) {
-		for var i = 0; i < textFields.count; i++ {
-			if !textFields[i].stringValue.isEmpty || textFields[i].stringValue != "" {
-				let baseValue = textFields[i].doubleValue
-				if baseValue > theValue[i] {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - High"
-				} else if baseValue < theValue[i] {
-					textFields[i].stringValue = "\(textFields[i].stringValue) - Normal"
-				}
-			}
-		}
-	}
-	
-	func checkGroupForNormal(textFields:[NSTextField!]) {
-		var theFieldCount = 0
-		var theNormalCount = 0
-		for i in textFields {
-			if i.stringValue != "" {
-				theFieldCount++
-			}
-		}
-		for i in textFields {
-			if i.stringValue.rangeOfString("Normal") != nil {
-				theNormalCount++
-			}
-		}
-		if theFieldCount != 0 && theNormalCount == theFieldCount {
-			groupValuesNormal(textFields)
-		} else {
-			setNormalsToBlank(textFields)
+	func resetFormFields(){
+		//Clear the PatientData object
+		if let thePatientData = MyVariables.thePatient {
+			thePatientData.clearPatientData()
 		}
 		
-	}
-	
-	func setNormalsToBlank(textFields:[NSTextField!]) {
-		for i in textFields {
-			if i.stringValue.rangeOfString("Normal") != nil {
-				i.stringValue = ""
-			}
-		}
-	}
-	
-	func groupValuesNormal(textFields: [NSTextField!]) {
-		for var index = 0; index < textFields.count; index++ {
-			if index == 0 {
-				textFields[index].stringValue = "Norm"
-			} else {
-				textFields[index].stringValue = ""
-			}
-		}
-
-	}
-	
-	//Based on the contents of the form, create the verbiage for the actual letter
-	func createLetterVerbiage() {
-		let tab = "    "
-		let letterDateString = "\(letterDateView.stringValue)"
-		let patientNameString = "Dear \(patientNameView.stringValue),"
-//		let labDate1 = labDateView.stringValue
-//		var finalLabDate = ""
-//		if !labDate1.isEmpty {
-//			let labDateFormatter1 = NSDateFormatter()
-//			labDateFormatter1.dateStyle = .ShortStyle
-//			let labDate2: NSDate = labDateFormatter1.dateFromString(labDate1)!
-//			let labDateFormatter2 = NSDateFormatter()
-//			labDateFormatter2.dateFormat = "M/d/YY"
-//			let finalLabDate = labDateFormatter2.stringFromDate(labDate2)
-//		}
-		let labDateString = "These are the results of your lab from \(labDateView.stringValue)."
-		var totalCholesterolString = ""
-		if !totalCholesterolView.stringValue.isEmpty || totalCholesterolView.stringValue != "" {
-			 totalCholesterolString = "Total Cholesterol: \(totalCholesterolView.stringValue).\nNormal is less than 200. Keep dietary cholesterol under 300mg per day and keep total fat in your diet to less than 30 percent of total daily calorie intake.\n"
-		}
-		var triglyceridesString = ""
-		if !triglyceridesView.stringValue.isEmpty || triglyceridesView.stringValue != "" {
-			 triglyceridesString = "Triglycerides (fat): \(triglyceridesView.stringValue).\nNormal is less than 150. Decrease the amount of fat in your diet to positively affect this number.\n"
-		}
-		var hdlsString = ""
-		if !hdlsView.stringValue.isEmpty || hdlsView.stringValue != "" {
-			 hdlsString = "HDL Cholesterol: \(hdlsView.stringValue).\nNormal is above 40 and the goal is above 50. This is the \"good\" cholesterol and protects against heart attacks.  Exercise will improve this number.\n"
-		}
-		var ldlsString = ""
-		if !ldlsView.stringValue.isEmpty || ldlsView.stringValue != "" {
-			 ldlsString = "LDL Cholesterol: \(ldlsView.stringValue).\nFair is less than 130, good is less than 100, and excellent is less than 70.  This is the \"bad\" cholesterol. Lifestyle changes such as diet and exercise can decrease this number."
-		}
-		var ldlConcentrationString = ""
-		if !ldlConcentrationView.stringValue.isEmpty || ldlConcentrationView.stringValue != "" {
-			 ldlConcentrationString = "LDL Particle Concentration: \(ldlConcentrationView.stringValue)\(tab)"
-		}
-		var smallLDLString = ""
-		if !smallLDLView.stringValue.isEmpty || smallLDLView.stringValue != "" {
-			 smallLDLString = "Small Dense LDL: \(smallLDLView.stringValue)"
-		}
-		var hemoglobinA1cString = ""
-		if !hemoglobinA1cView.stringValue.isEmpty || hemoglobinA1cView.stringValue != "" {
-			 hemoglobinA1cString = "Hemoglobin A1c: \(hemoglobinA1cView.stringValue).  The goal is less than 7 and normal is less than 6.  This number equals a 3 month average blood sugar of \(averageGlucoseView.stringValue) (the goal is less than 150)."
-		}
-		var microAlbuminString = ""
-		if !microalbuminView.stringValue.isEmpty || microalbuminView.stringValue != "" {
-			 microAlbuminString = "Urine Microalbumin: \(microalbuminView.stringValue)"
-		}
-		var glucoseString = ""
-		if !glucoseView.stringValue.isEmpty || glucoseView.stringValue != "" {
-			 glucoseString = "Glucose: \(glucoseView.stringValue)\(tab)"
-		}
-		var creatinineString = ""
-		if !creatinineView.stringValue.isEmpty || creatinineView.stringValue != "" {
-			creatinineString = "Creatinine: \(creatinineView.stringValue)\(tab)"
-		}
-		var potassiumString = ""
-		if !potassiumView.stringValue.isEmpty || potassiumView.stringValue != "" {
-			potassiumString = "Potassium: \(potassiumView.stringValue)"
-		}
-		var calciumString = ""
-		if !calciumView.stringValue.isEmpty || calciumView.stringValue != "" {
-			calciumString = "Calcium: \(calciumView.stringValue)"
-		}
-		var eGFRAAString = ""
-		if !eGFRAAView.stringValue.isEmpty || eGFRAAView.stringValue != "" {
-			eGFRAAString = "eGFR African American: \(eGFRAAView.stringValue)"
-		}
-		var eGFRNonAAString = ""
-		if !eGFRNonAAView.stringValue.isEmpty || eGFRNonAAView.stringValue != "" {
-			eGFRNonAAString = "eGFR Non-African American: \(eGFRNonAAView.stringValue)"
-		}
-		var proteinString = ""
-		if !proteinView.stringValue.isEmpty || proteinView.stringValue != "" {
-			if proteinView.stringValue == "Norm" {
-				proteinString = "Liver panel results within normal range."
-			} else {
-				proteinString = "Protein: \(proteinView.stringValue)"
-			}
-		}
-		var albuminString = ""
-		if !albuminView.stringValue.isEmpty || albuminView.stringValue != "" {
-			albuminString = "Albumin: \(albuminView.stringValue)"
-		}
-		var calculatedGlobString = ""
-		if !calculatedGlobView.stringValue.isEmpty || calculatedGlobView.stringValue != "" {
-			calculatedGlobString = "Globulin: \(calculatedGlobView.stringValue)"
-		}
-		var bilirubinString = ""
-		if !bilirubinView.stringValue.isEmpty || bilirubinView.stringValue != "" {
-			bilirubinString = "Bilirubin: \(bilirubinView.stringValue)"
-		}
-		var alkPhosphataseString = ""
-		if !alkPhosphataseView.stringValue.isEmpty || alkPhosphataseView.stringValue != "" {
-			alkPhosphataseString = "Alk Phosphatase: \(alkPhosphataseView.stringValue)"
-		}
-		var astString = ""
-		if !astView.stringValue.isEmpty || astView.stringValue != "" {
-			astString = "SGOT (AST): \(astView.stringValue)"
-		}
-		var altString = ""
-		if !altView.stringValue.isEmpty || altView.stringValue != "" {
-			altString = "SGPT (ALT): \(altView.stringValue)"
-		}
-		var tshString = ""
-		if !tshView.stringValue.isEmpty || tshView.stringValue != "" {
-			tshString = "TSH: \(tshView.stringValue)"
-		}
-		var freeT3String = ""
-		if !freeT3View.stringValue.isEmpty || freeT3View.stringValue != "" {
-			freeT3String = "Free T3: \(freeT3View.stringValue)"
-		}
-		var freeT4String = ""
-		if !freeT4View.stringValue.isEmpty || freeT4View.stringValue != "" {
-			freeT4String = "Free T4: \(freeT4View.stringValue)"
-		}
-		var psaString = ""
-		if !psaView.stringValue.isEmpty || psaView.stringValue != "" {
-			psaString = "PSA: \(psaView.stringValue)"
-		}
-		var cortisolString = ""
-		if !cortisolView.stringValue.isEmpty || cortisolView.stringValue != "" {
-			cortisolString = "Cortisol: \(cortisolView.stringValue)"
-		}
-		var ckTotalString = ""
-		if !ckTotalView.stringValue.isEmpty || ckTotalView.stringValue != "" {
-			ckTotalString = "Creatinine Kinase: \(ckTotalView.stringValue)"
-		}
-		var cReactiveProteinString = ""
-		if !cReactiveProteinView.stringValue.isEmpty || cReactiveProteinView.stringValue != "" {
-			cReactiveProteinString = "C-Reactive Protein: \(cReactiveProteinView.stringValue)"
-		}
-		var vitaminDString = ""
-		if !vitaminDView.stringValue.isEmpty || vitaminDView.stringValue != "" {
-			vitaminDString = "Vitamin D: \(vitaminDView.stringValue)"
-		}
-		var vitaminB12String = ""
-		if !vitaminB12View.stringValue.isEmpty || vitaminB12View.stringValue != "" {
-			vitaminB12String = "Vitamin B12: \(vitaminB12View.stringValue)"
-		}
-		var ironString = ""
-		if !ironView.stringValue.isEmpty || ironView.stringValue != "" {
-			ironString = "Iron: \(ironView.stringValue)"
-		}
-		var wbcString = ""
-		if !wbcView.stringValue.isEmpty || wbcView.stringValue != "" {
-			if wbcView.stringValue == "Norm" {
-				wbcString = "Blood count results within normal range."
-			} else {
-				wbcString = "White Blood Count: \(wbcView.stringValue)"
-			}
-		}
-		var hgbString = ""
-		if !hgbView.stringValue.isEmpty || hgbView.stringValue != "" {
-			hgbString = "Hemoglobin: \(hgbView.stringValue)"
-		}
-		var hctString = ""
-		if !hctView.stringValue.isEmpty || hctView.stringValue != "" {
-			hctString = "Hematocrit: \(hctView.stringValue)"
-		}
-		var plateletsString = ""
-		if !plateletsView.stringValue.isEmpty || plateletsView.stringValue != "" {
-			plateletsString = "Platelets: \(plateletsView.stringValue)"
-		}
-		var sedRateString = ""
-		if !sedRateView.stringValue.isEmpty || sedRateView.stringValue != "" {
-			sedRateString = "Sedimentation Rate: \(sedRateView.stringValue)"
-		}
-		var agRatioString = ""
-		if !agRatioView.stringValue.isEmpty || agRatioView.stringValue != "" {
-			agRatioString = "A/G Ratio: \(agRatioView.stringValue)"
-		}
-		var other1String = ""
-		if !other1View.stringValue.isEmpty || other1View.stringValue != "" {
-			other1String = "\(other1View.stringValue)"
-		}
-		var other2String = ""
-		if !other2View.stringValue.isEmpty || other2View.stringValue != "" {
-			other2String = "\(other2View.stringValue)"
-		}
-		var other3String = ""
-		if !other3View.stringValue.isEmpty || other3View.stringValue != "" {
-			other3String = "\(other3View.stringValue)"
-		}
-		var other4String = ""
-		if !other4View.stringValue.isEmpty || other4View.stringValue != "" {
-			other4String = "\(other4View.stringValue)"
-		}
-		var other5String = ""
-		if !other5View.stringValue.isEmpty || other5View.stringValue != "" {
-			other5String = "\(other5View.stringValue)"
-		}
-		var other6String = ""
-		if !other6View.stringValue.isEmpty || other6View.stringValue != "" {
-			other6String = "\(other6View.stringValue)"
+		//Clear the LabData object
+		if let theCompleteLabData = MyVariables.completeLabData {
+			theCompleteLabData.resetAllTheLabs()
 		}
 		
-		
-		//Create the strings for the different sections
-			//Cholesterol
-		var aNewLine = ""
-		if (ldlConcentrationString != "") || (smallLDLString != "") {
-			aNewLine = "\n"
+		//Clear the LabLetter object
+		if let theLabLetter = MyVariables.theLabLetter {
+			theLabLetter.resetVariables()
 		}
-		let cholesterolResults: String = totalCholesterolString + triglyceridesString + hdlsString + ldlsString + aNewLine + ldlConcentrationString + smallLDLString
-		var cholesterolFinal = ""
-		if cholesterolResults != "" {
-			cholesterolFinal = "CHOLESTEROL\n\(cholesterolResults)\n\n"
-		}
-		
-			//CBC
-		var bloodCountArray = [String]()
-		let cbcTestingArray = [wbcString, hgbString, hctString, plateletsString]
-		for var i = 0; i < cbcTestingArray.count; i++ {
-			if cbcTestingArray[i] != "" {
-				bloodCountArray.append(cbcTestingArray[i])
-			}
-		}
-		let bcArrayCount = bloodCountArray.count
-		var bloodCountResults = ""
-		if bcArrayCount > 0 {
-			if bcArrayCount <= 3 {
-				bloodCountResults = bloodCountArray.joinWithSeparator(tab)
-			} else if bcArrayCount > 3 {
-				bloodCountResults = "\(wbcString)\(tab)\(hgbString)\(tab)\(hctString)\n\(plateletsString)"
-			}
-		}
-		var bloodCountFinal = ""
-		if bloodCountResults != "" {
-			bloodCountFinal = "BLOOD COUNT\n\(bloodCountResults)\n\n"
-		}
-		
-			//CMP
-		var cmpResults = ""
-		var cmpResultsArray = [String]()
-		let cmpArray = [glucoseString, creatinineString, potassiumString, calciumString]
-		for i in cmpArray {
-			if i != "" {
-				cmpResultsArray.append(i)
-			}
-		}
-		if !cmpResultsArray.isEmpty {
-		cmpResults = cmpResultsArray.joinWithSeparator(tab)
-		}
-		var eGFRResults = ""
-		if eGFRAAString != "" {
-			if cmpResults != "" {
-				eGFRResults = "\n\(eGFRAAString)\(tab)\(eGFRNonAAString)"
-			} else {
-				eGFRResults = "\(eGFRAAString)\(tab)\(eGFRNonAAString)"
-			}
-		}
-		var cmpFinal = ""
-		if cmpResults != "" {
-			cmpFinal = "COMPLETE METABOLIC PANEL\n\(cmpResults)\(eGFRResults)\n\n"
-		}
-		
-			//Liver Panel
-		var liverArray = [String]()
-		let liverTestingArray = [proteinString, albuminString, calculatedGlobString, bilirubinString, alkPhosphataseString, agRatioString, astString, altString]
-		for var i = 0; i < liverTestingArray.count; i++ {
-			if liverTestingArray[i] != "" {
-				liverArray.append(liverTestingArray[i])
-			}
-		}
-		let liverArrayCount = liverArray.count
-		var liverResults = ""
-		if liverArrayCount < 4 {
-			liverResults = liverArray.joinWithSeparator(tab)
-		} else if (liverArrayCount > 3) && (liverArrayCount < 7) {
-			let basicLiverArray1 = liverArray[0..<3]
-			let basicLiverArray2 = liverArray[3..<liverArrayCount]
-			liverResults = basicLiverArray1.joinWithSeparator(tab) + "\n" + basicLiverArray2.joinWithSeparator(tab)
-		} else if liverArrayCount > 6 {
-			let basicLiverArray1 = liverArray[0..<3]
-			let basicLiverArray2 = liverArray[3..<6]
-			let basicLiverArray3 = liverArray[6..<liverArrayCount]
-			liverResults = basicLiverArray1.joinWithSeparator(tab) + "\n" + basicLiverArray2.joinWithSeparator(tab) + "\n" + basicLiverArray3.joinWithSeparator(tab)
-		}
-		var liverFinal = ""
-		if liverResults != "" {
-			liverFinal = "LIVER PANEL\n\(liverResults)\n\n"
-		}
-		
-		
-		
-		
-			//HbA1c/Microalbumin
-		var hgbMicroResults = ""
-		var hgbMicroResultsArray = [String]()
-		let hgbMicroArray = [hemoglobinA1cString, microAlbuminString]
-		for i in hgbMicroArray {
-			if i != "" {
-				hgbMicroResultsArray.append(i)
-			}
-		}
-		hgbMicroResults = hgbMicroResultsArray.joinWithSeparator("\n")
-		var hgbMicroFinal = ""
-		if hgbMicroResults != "" {
-			hgbMicroFinal = "BLOOD SUGAR AVERAGE/MICROALBUMIN\n\(hgbMicroResults)\n\n"
-		}
-		
-		
-			//Thyroid
-		var thyroidResults = ""
-		var thyroidResultsArray = [String]()
-		let thyroidArray = [tshString, freeT3String, freeT4String]
-		for i in thyroidArray {
-			if i != "" {
-				thyroidResultsArray.append(i)
-			}
-		}
-		thyroidResults = thyroidResultsArray.joinWithSeparator(tab)
-		var thyroidFinal = ""
-		if thyroidResults != "" {
-			thyroidFinal = "THYROID FUNCTION\n\(thyroidResults)\n\n"
-		}
-		
-			//Other
-		var otherArray = [String]()
-		let otherTestingArray = [psaString, ckTotalString, cReactiveProteinString, cortisolString, sedRateString, vitaminB12String, vitaminDString, ironString, other1String, other2String, other3String, other4String, other5String, other6String]
-		for var i = 0; i < otherTestingArray.count; i++ {
-			if otherTestingArray[i] != "" {
-				otherArray.append(otherTestingArray[i])
-			}
-		}
-		let otherArrayCount = otherArray.count
-		var otherResults = ""
-		if otherArrayCount < 4 {
-			otherResults = otherArray.joinWithSeparator(tab)
-		} else if (otherArrayCount > 3) && (otherArrayCount < 7) {
-			let basicOtherArray1 = otherArray[0..<3]
-			let basicOtherArray2 = otherArray[3..<otherArrayCount]
-			otherResults = basicOtherArray1.joinWithSeparator(tab) + "\n" + basicOtherArray2.joinWithSeparator(tab)
-		} else if (otherArrayCount > 6) && (otherArrayCount < 10) {
-			let basicOtherArray1 = otherArray[0..<3]
-			let basicOtherArray2 = otherArray[3..<6]
-			let basicOtherArray3 = otherArray[6..<otherArrayCount]
-			otherResults = basicOtherArray1.joinWithSeparator(tab) + "\n" + basicOtherArray2.joinWithSeparator(tab) + "\n" + basicOtherArray3.joinWithSeparator(tab)
-		} else if (otherArrayCount > 9) && (otherArrayCount < 13) {
-			let basicOtherArray1 = otherArray[0..<3]
-			let basicOtherArray2 = otherArray[3..<6]
-			let basicOtherArray3 = otherArray[6..<9]
-			let basicOtherArray4 = otherArray[9..<otherArrayCount]
-			otherResults = basicOtherArray1.joinWithSeparator(tab) + "\n" + basicOtherArray2.joinWithSeparator(tab) + "\n" + basicOtherArray3.joinWithSeparator(tab) + "\n" + basicOtherArray4.joinWithSeparator(tab)
-		} else if (otherArrayCount > 12) && (otherArrayCount < 16) {
-			let basicOtherArray1 = otherArray[0..<3]
-			let basicOtherArray2 = otherArray[3..<6]
-			let basicOtherArray3 = otherArray[6..<9]
-			let basicOtherArray4 = otherArray[9..<12]
-			let basicOtherArray5 = otherArray[12..<otherArrayCount]
-			otherResults = basicOtherArray1.joinWithSeparator(tab) + "\n" + basicOtherArray2.joinWithSeparator(tab) + "\n" + basicOtherArray3.joinWithSeparator(tab) + "\n" + basicOtherArray4.joinWithSeparator(tab) + "\n" + basicOtherArray5.joinWithSeparator(tab)
-		}
-		var otherFinal = ""
-		if otherResults != "" {
-			otherFinal = "OTHER\n\(otherResults)"
-		}
-		
-		
-		//Compose the final letter from the substrings
-		letterString = "\(letterDateString)\n\n\(patientNameString)\n\n\(labDateString)\n\n\(bloodCountFinal)\(cholesterolFinal)\(hgbMicroFinal)\(cmpFinal)\(liverFinal)\(thyroidFinal)\(otherFinal)\n\nPlease call my office and make an appointment if you have any questions about these results.\nSincerely,\n\nDawn R. Whelchel, M.D."
-		
-		//Pass the final results to the clipboard
-		let pasteBoard = NSPasteboard.generalPasteboard()
-		pasteBoard.clearContents()
-		pasteBoard.setString(letterString, forType: NSPasteboardTypeString)
-		
 	}
 	
 	@IBAction func takeShowResultsWindow(sender: AnyObject) {

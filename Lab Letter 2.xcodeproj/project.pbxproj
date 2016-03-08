@@ -8,7 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		7921551A1AFA824400B73B9A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792155191AFA824400B73B9A /* Constants.swift */; };
-		7921551C1AFA825100B73B9A /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7921551B1AFA825100B73B9A /* Functions.swift */; };
+		7921551C1AFA825100B73B9A /* PrepAndPopulateFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7921551B1AFA825100B73B9A /* PrepAndPopulateFunctions.swift */; };
+		79751D6F1C87C4D700D79070 /* LabLetterClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79751D6E1C87C4D700D79070 /* LabLetterClass.swift */; };
+		799DE43A1C7E1F7A00085733 /* LabDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799DE4391C7E1F7A00085733 /* LabDataClass.swift */; };
+		79C973321C87456100C1495F /* PrintFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C973311C87456100C1495F /* PrintFunctions.swift */; };
+		79CC4CD01C80A724003F2916 /* PatientDataStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CC4CCF1C80A724003F2916 /* PatientDataStruct.swift */; };
+		79EDE0F11C848D3F00B366AD /* LabValueEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EDE0F01C848D3F00B366AD /* LabValueEnums.swift */; };
 		79F78D971A695FA7009BFAD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F78D961A695FA7009BFAD4 /* AppDelegate.swift */; };
 		79F78D991A695FA7009BFAD4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79F78D981A695FA7009BFAD4 /* Images.xcassets */; };
 		79F78D9C1A695FA7009BFAD4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F78D9A1A695FA7009BFAD4 /* MainMenu.xib */; };
@@ -26,8 +31,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		792155191AFA824400B73B9A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		7921551B1AFA825100B73B9A /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		792155191AFA824400B73B9A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Constants.swift; sourceTree = "<group>"; };
+		7921551B1AFA825100B73B9A /* PrepAndPopulateFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrepAndPopulateFunctions.swift; path = ../PrepAndPopulateFunctions.swift; sourceTree = "<group>"; };
+		79751D6E1C87C4D700D79070 /* LabLetterClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabLetterClass.swift; sourceTree = "<group>"; };
+		799DE4391C7E1F7A00085733 /* LabDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabDataClass.swift; sourceTree = "<group>"; };
+		79C973311C87456100C1495F /* PrintFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintFunctions.swift; sourceTree = "<group>"; };
+		79CC4CCF1C80A724003F2916 /* PatientDataStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientDataStruct.swift; sourceTree = "<group>"; };
+		79EDE0F01C848D3F00B366AD /* LabValueEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabValueEnums.swift; sourceTree = "<group>"; };
 		79F78D911A695FA6009BFAD4 /* Lab Letter 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lab Letter 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		79F78D951A695FA6009BFAD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79F78D961A695FA7009BFAD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,8 +69,6 @@
 		79F78D881A695FA6009BFAD4 = {
 			isa = PBXGroup;
 			children = (
-				7921551B1AFA825100B73B9A /* Functions.swift */,
-				792155191AFA824400B73B9A /* Constants.swift */,
 				79F78D931A695FA6009BFAD4 /* Lab Letter 2 */,
 				79F78DA41A695FA7009BFAD4 /* Lab Letter 2Tests */,
 				79F78D921A695FA6009BFAD4 /* Products */,
@@ -80,9 +88,16 @@
 			isa = PBXGroup;
 			children = (
 				79F78D961A695FA7009BFAD4 /* AppDelegate.swift */,
+				7921551B1AFA825100B73B9A /* PrepAndPopulateFunctions.swift */,
+				79C973311C87456100C1495F /* PrintFunctions.swift */,
+				792155191AFA824400B73B9A /* Constants.swift */,
 				79F78D981A695FA7009BFAD4 /* Images.xcassets */,
 				79F78D9A1A695FA7009BFAD4 /* MainMenu.xib */,
 				79F78D941A695FA6009BFAD4 /* Supporting Files */,
+				799DE4391C7E1F7A00085733 /* LabDataClass.swift */,
+				79CC4CCF1C80A724003F2916 /* PatientDataStruct.swift */,
+				79EDE0F01C848D3F00B366AD /* LabValueEnums.swift */,
+				79751D6E1C87C4D700D79070 /* LabLetterClass.swift */,
 			);
 			path = "Lab Letter 2";
 			sourceTree = "<group>";
@@ -213,9 +228,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79EDE0F11C848D3F00B366AD /* LabValueEnums.swift in Sources */,
+				79C973321C87456100C1495F /* PrintFunctions.swift in Sources */,
+				799DE43A1C7E1F7A00085733 /* LabDataClass.swift in Sources */,
 				79F78D971A695FA7009BFAD4 /* AppDelegate.swift in Sources */,
+				79751D6F1C87C4D700D79070 /* LabLetterClass.swift in Sources */,
 				7921551A1AFA824400B73B9A /* Constants.swift in Sources */,
-				7921551C1AFA825100B73B9A /* Functions.swift in Sources */,
+				79CC4CD01C80A724003F2916 /* PatientDataStruct.swift in Sources */,
+				7921551C1AFA825100B73B9A /* PrepAndPopulateFunctions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
