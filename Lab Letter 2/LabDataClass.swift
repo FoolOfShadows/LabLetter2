@@ -25,20 +25,27 @@ class LabData {
 	}
 }
 
-class LabDataWithHighLow: LabData {
+class LabDataPosNeg: LabData {
+	var outputTitle: String
+	
+	init(controller: NSTextField, idText: String, outputTitle:String) {
+		self.outputTitle = outputTitle
+		super.init(controller: controller, idText: idText)
+	}
+}
+
+class LabDataWithHighLow: LabDataPosNeg {
 	var highValuesFemale: Double
 	var lowValuesFemale: Double
 	var highValuesMale: Double
 	var lowValuesMale: Double
-	var outputTitle: String
 	
 	init(controller: NSTextField, idText: String, highFemale: Double, lowFemale: Double, highMale: Double, lowMale: Double, outputTitle: String) {
 		self.highValuesFemale = highFemale
 		self.lowValuesFemale = lowFemale
 		self.highValuesMale = highMale
 		self.lowValuesMale = lowMale
-		self.outputTitle = outputTitle
-		super.init(controller: controller, idText: idText)
+		super.init(controller: controller, idText: idText, outputTitle: outputTitle)
 	}
 	
 	override func labRange(ptGender: String) -> String {

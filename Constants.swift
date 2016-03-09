@@ -251,7 +251,8 @@ let extraPhrases = ["CORTISOL, RANDOM Show test details",
 	"CREATININE, URINE, CONC.",
 	"GLUCOSE\nNEGATIVE",
 	"URIC ACID Show text details",
-	"RHEUMATOID FACTOR, QUANT Show test details"]
+	"RHEUMATOID FACTOR, QUANT Show test details",
+	"H. PYLORI IgG, QUAL Show test details"]
 
 let moreExtraPhrases = ["HEMOGLOBIN A1c"]
 

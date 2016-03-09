@@ -8,7 +8,7 @@
 
 import Cocoa
 
-func generateIndividualResultString(theHeader: String, theLabs:[LabDataWithHighLow], checkForNorms:Bool) ->String {
+func generateIndividualResultString(theHeader: String, theLabs:[LabDataPosNeg], checkForNorms:Bool) ->String {
 	var result = String()
 	var theArray = [String]()
 	//If the checkForNorms flag is true, develop the string to only report on 

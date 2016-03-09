@@ -105,21 +105,21 @@ class AllTheLabs {
 	var tshLab:LabDataTSH
 	var psaLab:LabDataWithHighLow
 	var uricAcidLab:LabDataWithHighLow
-	//var inrLab:LabData
+	var inrLab:LabDataPosNeg
 	var folicAcidLab:LabDataWithHighLow
 	var ferritinLab:LabDataWithHighLow
 	var magnesiumLab:LabDataWithHighLow
 	var ldhLab:LabDataWithHighLow
 	var lipaseLab:LabDataWithHighLow
 	var amylaseLab:LabDataWithHighLow
-	//var hPyloriLab
+	var hPyloriLab:LabDataPosNeg
 	var rheumatoidFactorLab:LabDataWithHighLow
-	//var antiNuclearLab
+	var antiNuclearLab: LabDataPosNeg
 	var reticulocyteLab:LabDataWithHighLow
 	var unlabeledLabs:[NSTextField]
 
 	
-	init(wbcLab:LabDataWithHighLow, hgbLab:LabDataWithHighLow, hctLab:LabDataWithHighLow, plateletsLab:LabDataWithHighLow, glucoseLab:LabDataGlucose, creatinineLab:LabDataWithHighLow, potassiumLab:LabDataWithHighLow, eGFRAALab:LabDataWithHighLow, eGFRNonAALab:LabDataWithHighLow, calciumLab:LabDataWithHighLow, proteinLab:LabDataWithHighLow, albuminLab:LabDataWithHighLow, calculatedGlobLab:LabDataWithHighLow, agRatioLab:LabDataWithHighLow, bilirubinLab:LabDataWithHighLow, alkPhosphataseLab:LabDataWithHighLow, astLab:LabDataWithHighLow, altLab:LabDataWithHighLow, microalbuminLab:LabDataWithHighLow, ldlConcentrationLab:LabDataWithHighLow, smallLDLLab:LabDataWithHighLow, freeT3Lab:LabDataWithHighLow, freeT4Lab:LabDataWithHighLow, totalCholesterolLab:LabData, triglyceridesLab:LabData, hdlLab:LabData, ldlLab:LabData, hba1cLab:LabData, aveGlucoseLab:LabData, ckLab:LabDataWithHighLow, sedRateLab:LabDataWithHighLow, cReactiveProteinLab:LabDataWithHighLow, cortisolLab:LabDataWithHighLow, vitaminB12Lab:LabDataWithHighLow, vitaminDLab:LabDataWithHighLow, ironLab:LabDataWithHighLow, tshLab:LabDataTSH, psaLab:LabDataWithHighLow, uricAcidLab:LabDataWithHighLow, folicAcidLab:LabDataWithHighLow, ferritinLab:LabDataWithHighLow, magnesiumLab:LabDataWithHighLow, ldhLab:LabDataWithHighLow, lipaseLab:LabDataWithHighLow, amylaseLab:LabDataWithHighLow, rheumatoidFactorLab:LabDataWithHighLow, reticulocyteLab:LabDataWithHighLow, unlabeledLabs:[NSTextField]) {
+	init(wbcLab:LabDataWithHighLow, hgbLab:LabDataWithHighLow, hctLab:LabDataWithHighLow, plateletsLab:LabDataWithHighLow, glucoseLab:LabDataGlucose, creatinineLab:LabDataWithHighLow, potassiumLab:LabDataWithHighLow, eGFRAALab:LabDataWithHighLow, eGFRNonAALab:LabDataWithHighLow, calciumLab:LabDataWithHighLow, proteinLab:LabDataWithHighLow, albuminLab:LabDataWithHighLow, calculatedGlobLab:LabDataWithHighLow, agRatioLab:LabDataWithHighLow, bilirubinLab:LabDataWithHighLow, alkPhosphataseLab:LabDataWithHighLow, astLab:LabDataWithHighLow, altLab:LabDataWithHighLow, microalbuminLab:LabDataWithHighLow, ldlConcentrationLab:LabDataWithHighLow, smallLDLLab:LabDataWithHighLow, freeT3Lab:LabDataWithHighLow, freeT4Lab:LabDataWithHighLow, totalCholesterolLab:LabData, triglyceridesLab:LabData, hdlLab:LabData, ldlLab:LabData, hba1cLab:LabData, aveGlucoseLab:LabData, ckLab:LabDataWithHighLow, sedRateLab:LabDataWithHighLow, cReactiveProteinLab:LabDataWithHighLow, cortisolLab:LabDataWithHighLow, vitaminB12Lab:LabDataWithHighLow, vitaminDLab:LabDataWithHighLow, ironLab:LabDataWithHighLow, tshLab:LabDataTSH, psaLab:LabDataWithHighLow, uricAcidLab:LabDataWithHighLow, folicAcidLab:LabDataWithHighLow, ferritinLab:LabDataWithHighLow, magnesiumLab:LabDataWithHighLow, ldhLab:LabDataWithHighLow, lipaseLab:LabDataWithHighLow, amylaseLab:LabDataWithHighLow, rheumatoidFactorLab:LabDataWithHighLow, reticulocyteLab:LabDataWithHighLow, antiNuclearLab:LabDataPosNeg, hPyloriLab:LabDataPosNeg, inrLab:LabDataPosNeg, unlabeledLabs:[NSTextField]) {
 		self.wbcLab = wbcLab
 		self.hgbLab = hgbLab
 		self.hctLab = hctLab
@@ -167,11 +167,14 @@ class AllTheLabs {
 		self.amylaseLab = amylaseLab
 		self.rheumatoidFactorLab = rheumatoidFactorLab
 		self.reticulocyteLab = reticulocyteLab
+		self.antiNuclearLab = antiNuclearLab
+		self.hPyloriLab = hPyloriLab
+		self.inrLab = inrLab
 		self.unlabeledLabs = unlabeledLabs
 	}
 	
 	func returnAllTheLabsButHGB() -> [LabData] {
-			return [wbcLab, hctLab, plateletsLab, glucoseLab, creatinineLab, eGFRAALab, eGFRNonAALab, potassiumLab, calciumLab, proteinLab, albuminLab, calculatedGlobLab, agRatioLab, bilirubinLab, alkPhosphataseLab, astLab, altLab, microalbuminLab, ldlConcentrationLab, smallLDLLab, freeT3Lab, freeT4Lab, totalCholesterolLab, triglyceridesLab, hdlLab, ldlLab, hba1cLab, aveGlucoseLab, ckLab, sedRateLab, cReactiveProteinLab, cortisolLab, vitaminB12Lab, vitaminDLab, ironLab, tshLab, psaLab, uricAcidLab, folicAcidLab, ferritinLab, magnesiumLab, ldhLab, lipaseLab, amylaseLab, rheumatoidFactorLab, reticulocyteLab]
+			return [wbcLab, hctLab, plateletsLab, glucoseLab, creatinineLab, eGFRAALab, eGFRNonAALab, potassiumLab, calciumLab, proteinLab, albuminLab, calculatedGlobLab, agRatioLab, bilirubinLab, alkPhosphataseLab, astLab, altLab, microalbuminLab, ldlConcentrationLab, smallLDLLab, freeT3Lab, freeT4Lab, totalCholesterolLab, triglyceridesLab, hdlLab, ldlLab, hba1cLab, aveGlucoseLab, ckLab, sedRateLab, cReactiveProteinLab, cortisolLab, vitaminB12Lab, vitaminDLab, ironLab, tshLab, psaLab, uricAcidLab, folicAcidLab, ferritinLab, magnesiumLab, ldhLab, lipaseLab, amylaseLab, rheumatoidFactorLab, reticulocyteLab, antiNuclearLab, hPyloriLab, inrLab]
 	}
 	
 	func returnBloodCount() -> [LabDataWithHighLow] {
@@ -202,8 +205,8 @@ class AllTheLabs {
 		return [tshLab, freeT3Lab, freeT4Lab]
 	}
 	
-	func returnOther() -> [LabDataWithHighLow] {
-		return [ckLab, sedRateLab, cReactiveProteinLab, cortisolLab, vitaminB12Lab, vitaminDLab, ironLab, psaLab, uricAcidLab, folicAcidLab, ferritinLab, magnesiumLab, ldhLab, lipaseLab, amylaseLab, rheumatoidFactorLab, reticulocyteLab]
+	func returnOther() -> [LabDataPosNeg] {
+		return [ckLab, sedRateLab, cReactiveProteinLab, cortisolLab, vitaminB12Lab, vitaminDLab, ironLab, psaLab, uricAcidLab, folicAcidLab, ferritinLab, magnesiumLab, ldhLab, lipaseLab, amylaseLab, rheumatoidFactorLab, reticulocyteLab, antiNuclearLab, hPyloriLab, inrLab]
 	}
 	
 	func clearUnlabeledLabs() {
@@ -218,45 +221,6 @@ class AllTheLabs {
 		lab.controller.stringValue = String()
 		}
 		hgbLab.controller.stringValue = String()
-		
-//		wbcLab.controller.stringValue = String()
-//		hctLab.controller.stringValue = String()
-//		plateletsLab.controller.stringValue = String()
-//		glucoseLab.controller.stringValue = String()
-//		creatinineLab.controller.stringValue = String()
-//		eGFRAALab.controller.stringValue = String()
-//		eGFRNonAALab.controller.stringValue = String()
-//		potassiumLab.controller.stringValue = String()
-//		calciumLab.controller.stringValue = String()
-//		proteinLab.controller.stringValue = String()
-//		albuminLab.controller.stringValue = String()
-//		calculatedGlobLab.controller.stringValue = String()
-//		agRatioLab.controller.stringValue = String()
-//		bilirubinLab.controller.stringValue = String()
-//		alkPhosphataseLab.controller.stringValue = String()
-//		astLab.controller.stringValue = String()
-//		altLab.controller.stringValue = String()
-//		microalbuminLab.controller.stringValue = String()
-//		ldlConcentrationLab.controller.stringValue = String()
-//		smallLDLLab.controller.stringValue = String()
-//		freeT3Lab.controller.stringValue = String()
-//		freeT4Lab.controller.stringValue = String()
-//		totalCholesterolLab.controller.stringValue = String()
-//		triglyceridesLab.controller.stringValue = String()
-//		hdlLab.controller.stringValue = String()
-//		ldlLab.controller.stringValue = String()
-//		hba1cLab.controller.stringValue = String()
-//		aveGlucoseLab.controller.stringValue = String()
-//		ckLab.controller.stringValue = String()
-//		sedRateLab.controller.stringValue = String()
-//		cReactiveProteinLab.controller.stringValue = String()
-//		cortisolLab.controller.stringValue = String()
-//		vitaminB12Lab.controller.stringValue = String()
-//		vitaminDLab.controller.stringValue = String()
-//		ironLab.controller.stringValue = String()
-//		tshLab.controller.stringValue = String()
-//		psaLab.controller.stringValue = String()
-//		uricAcidLab.controller.stringValue = String()
 		
 		clearUnlabeledLabs()
 	}
