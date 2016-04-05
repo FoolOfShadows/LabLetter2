@@ -30,7 +30,9 @@ func generateIndividualResultString(theHeader: String, theLabs:[LabDataPosNeg], 
 		if (normCount == arrayCount) && (normCount != 0) {
 			return "\(theHeader.uppercaseString) results are all within normal range."
 		} else  if !theArray.isEmpty {
-			result = "\(theHeader.uppercaseString)\n\(theArray.joinWithSeparator(tab))"
+			let preString = stringOfThreeFromArray(theArray)
+			result = "\(theHeader)\n\(preString)"
+			//result = "\(theHeader.uppercaseString)\n\(theArray.joinWithSeparator(tab))"
 			return result
 		}
 	} else {
@@ -43,7 +45,9 @@ func generateIndividualResultString(theHeader: String, theLabs:[LabDataPosNeg], 
 		}
 	}
 	if !theArray.isEmpty {
-		result = "\(theHeader.uppercaseString)\n\(theArray.joinWithSeparator(tab))"
+		let preString = stringOfThreeFromArray(theArray)
+		result = "\(theHeader)\n\(preString)"
+		//result = "\(theHeader.uppercaseString)\n\(theArray.joinWithSeparator(tab))"
 	}
 	return result
 }
@@ -118,7 +122,7 @@ func generateDiabetesSectionResults() {
 	
 	if let aveGlucose = MyVariables.completeLabData?.aveGlucoseLab {
 		if !aveGlucose.controller.stringValue.isEmpty {
-			aveGlucoseString = "This number equals a 3 month average blood sugar of \(aveGlucose.controller.stringValue)."
+			aveGlucoseString = "This number equals a 3 month average blood sugar of \(aveGlucose.controller.stringValue) (the goal is less than 150)."
 		}
 	}
 	
@@ -198,13 +202,36 @@ func generateCholesterolSectionResults() {
 	}
 	
 	if !cholesterolArray.isEmpty {
-		let cholesterolResults = cholesterolArray.joinWithSeparator("\n")
+		let cholesterolResults = "CHOLESTEROL\n" + cholesterolArray.joinWithSeparator("\n")
 		MyVariables.theLabLetter?.cholesterolResults = cholesterolResults
 	}
 
 }
 
 
-func createLabLetterText() {
+func stringOfThreeFromArray(startingArray: [String]) -> String {
+	var arrayOfArrays: [String] = [String]()
+	var initialArray = startingArray
 	
+	while initialArray.count > 0 {
+		if initialArray.count >= 3 {
+			var tempArray = [String]()
+			for i in 1...3 {
+				tempArray.append(initialArray.removeAtIndex(0))
+			}
+			let tempString = tempArray.joinWithSeparator("    ")
+			arrayOfArrays.append(tempString)
+		} else {
+			var tempArray = [String]()
+			for i in 1...initialArray.count {
+				tempArray.append(initialArray.removeAtIndex(0))
+			}
+			let tempString = tempArray.joinWithSeparator("    ")
+			arrayOfArrays.append(tempString)
+		}
+	}
+	
+	let stringResult = arrayOfArrays.joinWithSeparator("\n")
+	
+	return stringResult
 }

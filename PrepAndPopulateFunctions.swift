@@ -60,7 +60,7 @@ func getDateRegEx(dateLine: String) -> String {
 	return theMatch
 }
 
-func getPatientDemo(theText:[String], var thePatient: PatientData) -> PatientData {
+func getPatientDemo(theText:[String], thePatient: PatientData) -> PatientData {
 	for (lineNumber, currentLine) in theText.enumerate() {
 		if currentLine.rangeOfString("COLLECTED") != nil {
 			thePatient.labDate = getDateRegEx(currentLine)

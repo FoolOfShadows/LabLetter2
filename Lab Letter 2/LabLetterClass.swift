@@ -14,16 +14,22 @@ class LabLetter {
 	var patientName = String()
 	var labDate = String()
 	var bloodCountResults = String()
+	let bloodCountHeading = "BLOOD COUNT"
 	var cholesterolResults = String()
 	var bloodSugarMicroResults = String()
 	var cmpResults = String()
+	let cmpHeading = "COMPLETE METABOLIC PANEL"
 	var liverResults = String()
+	let liverHeading = "LIVER PANEL"
 	var thyroidResults = String()
+	let thyroidHeading = "THYROID FUNCTION"
 	var otherResults = String()
+	let otherHeading = "OTHER"
 	
 	init(letterDateField:NSTextField) {
 		self.letterDateField = letterDateField
 	}
+	
 	func resetVariables() {
 		letterDate = String()
 		patientName = String()
@@ -35,6 +41,43 @@ class LabLetter {
 		liverResults = String()
 		thyroidResults = String()
 		otherResults = String()
+	}
+	
+	func generateSectionResults(theHeader: String, theLabs: [LabDataPosNeg], checkForNorms: Bool) -> String {
+		var result = String()
+		var theArray = [String]()
+		if checkForNorms == true {
+			var normCount = 0
+			for lab in theLabs {
+				if !lab.controller.stringValue.isEmpty {
+					if lab.controller.stringValue.containsString("Normal") {
+						normCount+=1
+					} else {
+						let theString = "\(lab.outputTitle) \(lab.controller.stringValue)"
+						theArray.append(theString)
+					}
+				}
+			}
+			if (normCount == theArray.count) && (normCount != 0) {
+				return "\(theHeader) results are all within normal range."
+			} else if !theArray.isEmpty {
+				let preString = stringOfThreeFromArray(theArray)
+				result = "\(theHeader)\n\(preString)"
+				return result
+			}
+		} else {
+			for lab in theLabs {
+				if !lab.controller.stringValue.isEmpty {
+					let theString = "\(lab.outputTitle) \(lab.controller.stringValue)"
+					theArray.append(theString)
+				}
+			}
+		}
+		if !theArray.isEmpty {
+			let preString = stringOfThreeFromArray(theArray)
+			result = "\(theHeader)\n\(preString)"
+		}
+		return result
 	}
 	
 	func buildLetter() {

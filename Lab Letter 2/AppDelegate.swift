@@ -129,7 +129,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		let eGFRAALab = LabDataWithHighLow(controller: eGFRAAView, idText: "eGFR AFRICAN AMER.", highFemale: eGFRAAHighF, lowFemale: eGFRAALowF, highMale: eGFRAAHighM, lowMale: eGFRAALowM, outputTitle: "eGFR African American:")
 		let eGFRNonAALab = LabDataWithHighLow(controller: eGFRNonAAView, idText: "eGFR NON-AFRICAN AMER.", highFemale: eGFRNonAAHighF, lowFemale: eGFRNonAALowF, highMale: eGFRNonAAHighM, lowMale: eGFRNonAALowM, outputTitle: "eGFR Non-African American:")
 		let potassiumLab = LabDataWithHighLow(controller: potassiumView, idText: "POTASSIUM", highFemale: potassiumHighF, lowFemale: potassiumLowF, highMale: potassiumHighM, lowMale: potassiumLowM, outputTitle: "Potassium:")
-		let calciumLab = LabDataWithHighLow(controller: calciumView, idText: "CALCIUM", highFemale: calciumHighF, lowFemale: calciumLowF, highMale: calciumHighM, lowMale: calciumLowM, outputTitle: "Calcium:")
+		let calciumLab = LabDataWithHighLow(controller: calciumView, idText: "CALCIUM", highFemale: calciumHighF, lowFemale: calciumLowF, highMale: calciumHighM, lowMale: calciumLowM, outputTitle: "\nCalcium:")
 		
 		//Liver Function
 		let proteinLab = LabDataWithHighLow(controller: proteinView, idText: "PROTEIN, TOTAL", highFemale: proteinHighF, lowFemale: proteinLowF, highMale: proteinHighM, lowMale: proteinLowM, outputTitle: "Protein:")
