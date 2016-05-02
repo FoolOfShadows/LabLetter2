@@ -67,6 +67,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet weak var rheumatoidFactorView: NSTextField!
 	@IBOutlet weak var antiNuclearView: NSTextField!
 	@IBOutlet weak var reticulocyteView: NSTextField!
+	@IBOutlet weak var testosteroneView: NSTextField!
+	
 	
     @IBOutlet weak var other1View: NSTextField!
     @IBOutlet weak var other2View: NSTextField!
@@ -182,10 +184,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		let antiNuclearLab = LabDataPosNeg(controller: antiNuclearView, idText: "Anti-Nuclear Antibodies", outputTitle: "Anti-Nuclear Antibodies:")
 		let hPyloriLab = LabDataPosNeg(controller: hPyloriView, idText: "H. PYLORI IgG", outputTitle: "H.Pylori:")
 		let inrLab = LabDataPosNeg(controller: inrView, idText: "INR", outputTitle: "INR:")
+		let testosteroneLab = LabDataWithHighLow(controller: testosteroneView, idText: "testosterone", highFemale: testosteroneHighF, lowFemale: testosteroneLowF, highMale: testosteroneHighM, lowMale: testosteroneLowM, outputTitle: "Testosterone:")
 		
 		
 		//Populate the completeLabData variable with all the lab objects
-		MyVariables.completeLabData = AllTheLabs(wbcLab: wbcLab, hgbLab: hgbLab, hctLab: hctLab, plateletsLab: plateletsLab, glucoseLab: glucoseLab, creatinineLab: creatinineLab, potassiumLab: potassiumLab, eGFRAALab: eGFRAALab, eGFRNonAALab: eGFRNonAALab, calciumLab: calciumLab, proteinLab: proteinLab, albuminLab: albuminLab, calculatedGlobLab: calculatedGlobLab, agRatioLab: agRatioLab, bilirubinLab: bilirubinLab, alkPhosphataseLab: alkPhosphataseLab, astLab: astLab, altLab: altLab, microalbuminLab: microalbuminLab, ldlConcentrationLab: ldlConcentrationLab, smallLDLLab: smallLDLLab, freeT3Lab: freeT3Lab, freeT4Lab: freeT4Lab, totalCholesterolLab: totalCholesterolLab, triglyceridesLab: triglyceridesLab, hdlLab: hdlLab, ldlLab: ldlLab, hba1cLab: hba1cLab, aveGlucoseLab: aveGlucoseLab, ckLab: ckLab, sedRateLab: sedRateLab, cReactiveProteinLab: cReactiveProteinLab, cortisolLab: cortisolLab, vitaminB12Lab: vitaminB12Lab, vitaminDLab: vitaminDLab, ironLab: ironLab, tshLab: tshLab, psaLab: psaLab, uricAcidLab: uricAcidLab, folicAcidLab: folicAcidLab, ferritinLab: ferritinLab, magnesiumLab: magnesiumLab, ldhLab: ldhLab, lipaseLab: lipaseLab, amylaseLab: amylaseLab, rheumatoidFactorLab: rheumatoidFactorLab, reticulocyteLab: reticulocyteLab, antiNuclearLab: antiNuclearLab, hPyloriLab: hPyloriLab, inrLab: inrLab, unlabeledLabs:[other1View, other2View, other3View, other4View, other5View, other6View])
+		MyVariables.completeLabData = AllTheLabs(wbcLab: wbcLab, hgbLab: hgbLab, hctLab: hctLab, plateletsLab: plateletsLab, glucoseLab: glucoseLab, creatinineLab: creatinineLab, potassiumLab: potassiumLab, eGFRAALab: eGFRAALab, eGFRNonAALab: eGFRNonAALab, calciumLab: calciumLab, proteinLab: proteinLab, albuminLab: albuminLab, calculatedGlobLab: calculatedGlobLab, agRatioLab: agRatioLab, bilirubinLab: bilirubinLab, alkPhosphataseLab: alkPhosphataseLab, astLab: astLab, altLab: altLab, microalbuminLab: microalbuminLab, ldlConcentrationLab: ldlConcentrationLab, smallLDLLab: smallLDLLab, freeT3Lab: freeT3Lab, freeT4Lab: freeT4Lab, totalCholesterolLab: totalCholesterolLab, triglyceridesLab: triglyceridesLab, hdlLab: hdlLab, ldlLab: ldlLab, hba1cLab: hba1cLab, aveGlucoseLab: aveGlucoseLab, ckLab: ckLab, sedRateLab: sedRateLab, cReactiveProteinLab: cReactiveProteinLab, cortisolLab: cortisolLab, vitaminB12Lab: vitaminB12Lab, vitaminDLab: vitaminDLab, ironLab: ironLab, tshLab: tshLab, psaLab: psaLab, testosteroneLab: testosteroneLab, uricAcidLab: uricAcidLab, folicAcidLab: folicAcidLab, ferritinLab: ferritinLab, magnesiumLab: magnesiumLab, ldhLab: ldhLab, lipaseLab: lipaseLab, amylaseLab: amylaseLab, rheumatoidFactorLab: rheumatoidFactorLab, reticulocyteLab: reticulocyteLab, antiNuclearLab: antiNuclearLab, hPyloriLab: hPyloriLab, inrLab: inrLab, unlabeledLabs:[other1View, other2View, other3View, other4View, other5View, other6View])
 		//Instantiate a LabLetter object to collect the letter parts
 		MyVariables.theLabLetter = LabLetter(letterDateField: letterDateView)
 		

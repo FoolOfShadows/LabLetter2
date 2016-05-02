@@ -67,6 +67,7 @@
                 <outlet property="rheumatoidFactorView" destination="HEq-yW-YJw" id="aYv-gt-jkq"/>
                 <outlet property="sedRateView" destination="5yf-HN-IRk" id="sIU-Ra-qaI"/>
                 <outlet property="smallLDLView" destination="ofD-3O-fJr" id="84o-ia-WPI"/>
+                <outlet property="testosteroneView" destination="cwu-co-1jx" id="BvI-Jz-H58"/>
                 <outlet property="totalCholesterolView" destination="zaG-Dd-qIC" id="F9R-X7-AQ2"/>
                 <outlet property="triglyceridesView" destination="GmY-OS-K0z" id="VoA-uR-f1T"/>
                 <outlet property="tshView" destination="aB6-a7-wrW" id="oqY-HQ-duU"/>
