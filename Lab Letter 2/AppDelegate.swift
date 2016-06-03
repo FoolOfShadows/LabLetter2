@@ -184,7 +184,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		let antiNuclearLab = LabDataPosNeg(controller: antiNuclearView, idText: "Anti-Nuclear Antibodies", outputTitle: "Anti-Nuclear Antibodies:")
 		let hPyloriLab = LabDataPosNeg(controller: hPyloriView, idText: "H. PYLORI IgG", outputTitle: "H.Pylori:")
 		let inrLab = LabDataPosNeg(controller: inrView, idText: "INR", outputTitle: "INR:")
-		let testosteroneLab = LabDataWithHighLow(controller: testosteroneView, idText: "testosterone", highFemale: testosteroneHighF, lowFemale: testosteroneLowF, highMale: testosteroneHighM, lowMale: testosteroneLowM, outputTitle: "Testosterone:")
+		let testosteroneLab = LabDataWithHighLow(controller: testosteroneView, idText: "TESTOSTERONE", highFemale: testosteroneHighF, lowFemale: testosteroneLowF, highMale: testosteroneHighM, lowMale: testosteroneLowM, outputTitle: "Testosterone:")
 		
 		
 		//Populate the completeLabData variable with all the lab objects

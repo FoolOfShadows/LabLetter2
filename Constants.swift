@@ -194,8 +194,8 @@ let lipaseHighM = 63.0
 
 let testosteroneLowF = 0.0
 let testosteroneHighF = 12.0
-let testosteroneLowM = 0.0
-let testosteroneHighM = 12.0
+let testosteroneLowM = 300.0
+let testosteroneHighM = 720.0
 
 let magnesiumLowF = 1.6
 let magnesiumHighF = 2.6
@@ -253,7 +253,9 @@ let extraPhrases = ["CORTISOL, RANDOM Show test details",
 	"URIC ACID Show text details",
 	"RHEUMATOID FACTOR, QUANT Show test details",
 	"H. PYLORI IgG, QUAL Show test details",
-	"CALCIUM, IONIZED"]
+	"CALCIUM, IONIZED",
+	"TESTOSTERONE, FREE/TOTAL",
+	"TESTOSTERONE REF RANGE",]
 
 let moreExtraPhrases = ["HEMOGLOBIN A1c"]
 
