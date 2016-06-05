@@ -136,12 +136,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		//Liver Function
 		let proteinLab = LabDataWithHighLow(controller: proteinView, idText: "PROTEIN, TOTAL", highFemale: proteinHighF, lowFemale: proteinLowF, highMale: proteinHighM, lowMale: proteinLowM, outputTitle: "Protein:")
 		let albuminLab = LabDataWithHighLow(controller: albuminView, idText: "ALBUMIN", highFemale: albuminHighF, lowFemale: albuminLowF, highMale: albuminHighM, lowMale: albuminLowM, outputTitle: "Albumin:")
-		let calculatedGlobLab = LabDataWithHighLow(controller: calculatedGlobView, idText: "CALCULATED GLOBULIN", highFemale: globHighF, lowFemale: globLowF, highMale: globHighM, lowMale: globLowM, outputTitle: "Globulin:")
-		let agRatioLab = LabDataWithHighLow(controller: agRatioView, idText: "CALCULATED A/G RATIO", highFemale: agRatioHighF, lowFemale: agRatioLowF, highMale: agRatioHighM, lowMale: agRatioLowM, outputTitle: "A/G Ratio:")
+		let calculatedGlobLab = LabDataWithHighLow(controller: calculatedGlobView, idText: "CALC GLOBULIN", highFemale: globHighF, lowFemale: globLowF, highMale: globHighM, lowMale: globLowM, outputTitle: "Globulin:")
+		let agRatioLab = LabDataWithHighLow(controller: agRatioView, idText: "CALC A/G RATIO", highFemale: agRatioHighF, lowFemale: agRatioLowF, highMale: agRatioHighM, lowMale: agRatioLowM, outputTitle: "A/G Ratio:")
 		let bilirubinLab = LabDataWithHighLow(controller: bilirubinView, idText: "BILIRUBIN, TOTAL", highFemale: biliHighF, lowFemale: biliLowF, highMale: biliHighM, lowMale: biliLowM, outputTitle: "Bilirubin:")
 		let alkPhosphataseLab = LabDataWithHighLow(controller: alkPhosphataseView, idText: "ALKALINE PHOSPHATASE", highFemale: alkPhosHighF, lowFemale: alkPhosLowF, highMale: alkPhosHighM, lowMale: alkPhosLowM, outputTitle: "Alk Phosphatase:")
-		let astLab = LabDataWithHighLow(controller: astView, idText: "SGOT (AST)", highFemale: astHighF, lowFemale: astLowF, highMale: astHighM, lowMale: astLowM, outputTitle: "SGOT (AST):")
-		let altLab = LabDataWithHighLow(controller: altView, idText: "SGPT (ALT)", highFemale: altHighF, lowFemale: altLowF, highMale: altHighM, lowMale: altLowM, outputTitle: "SGPT (ALT):")
+		let astLab = LabDataWithHighLow(controller: astView, idText: "AST", highFemale: astHighF, lowFemale: astLowF, highMale: astHighM, lowMale: astLowM, outputTitle: "SGOT (AST):")
+		let altLab = LabDataWithHighLow(controller: altView, idText: "ALT", highFemale: altHighF, lowFemale: altLowF, highMale: altHighM, lowMale: altLowM, outputTitle: "SGPT (ALT):")
 		
 		//Diabetes Labs - Simple
 		let hba1cLab = LabData(controller: hemoglobinA1cView, idText: "HEMOGLOBIN A1c")
@@ -153,7 +153,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		let totalCholesterolLab = LabData(controller: totalCholesterolView, idText: "CHOLESTEROL")
 		let triglyceridesLab = LabData(controller: triglyceridesView, idText: "TRIGLYCERIDES")
 		let hdlLab = LabData(controller: hdlsView, idText: "HDL CHOLESTEROL")
-		let ldlLab = LabData(controller: ldlsView, idText: "CALCULATED LDL CHOL")
+		let ldlLab = LabData(controller: ldlsView, idText: "CALC LDL CHOL")
 		// - Complex
 		let ldlConcentrationLab = LabDataWithHighLow(controller: ldlConcentrationView, idText: "LDL PARTICLE (P) CONC", highFemale: ldlConcHighF, lowFemale: ldlConcLowF, highMale: ldlConcHighM, lowMale: ldlConcLowM, outputTitle: "LDL Particle Concentration:")
 		let smallLDLLab = LabDataWithHighLow(controller: smallLDLView, idText: "SMALL LDL-P", highFemale: smallLDLHighF, lowFemale: smallLDLLowF, highMale: smallLDLHighM, lowMale: smallLDLLowM, outputTitle: "Small Dense LDL:")
