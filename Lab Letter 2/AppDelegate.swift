@@ -81,11 +81,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	var letterString = ""
 	
-    @IBAction func takeClear(sender: AnyObject) {
-     resetFormFields()
-    }
+	@IBAction func takeClear(sender: NSButton) {
+		resetFormFields()
+	}
 	
-    @IBAction func takeProcess(sender: AnyObject) {
+    @IBAction func takeProcess(sender: NSButton) {
 		generateSectionResultsString()
 		generateDiabetesSectionResults()
 		generateCholesterolSectionResults()
@@ -99,12 +99,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		//Extract the raw data from the PracticeFusion text in the clipboard and set the fields of the form accordingly
 		if let theCompleteLabData = MyVariables.completeLabData {
 			if let thisPatient = MyVariables.thePatient {
-				extractValues(theCompleteLabData.returnAllTheLabsButHGB(), thePatient: thisPatient, wordsToRemove: extraPhrases)
+				extractValues(theLabData: theCompleteLabData.returnAllTheLabsButHGB(), thePatient: thisPatient, wordsToRemove: extraPhrases)
 			}
 		}
 		if let theHGBLabData = MyVariables.completeLabData?.hgbLab {
 			if let thisPatient = MyVariables.thePatient {
-				extractValues([theHGBLabData], thePatient: thisPatient, wordsToRemove: moreExtraPhrases)
+				extractValues(theLabData: [theHGBLabData], thePatient: thisPatient, wordsToRemove: moreExtraPhrases)
 			}
 		}
 	}
@@ -114,7 +114,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
 
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
 		resetFormFields()
 		
 		MyVariables.thePatient = PatientData(nameField: patientNameView, dateField: labDateView)
@@ -194,9 +194,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		
 		
         //Get current date and format it
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d, YYYY"
-        let todaysDate: String = formatter.stringFromDate(NSDate())
+        let todaysDate: String = formatter.string(from: Date())
         letterDateView.stringValue = todaysDate
 		if let thisLabLetter = MyVariables.theLabLetter {
 				thisLabLetter.letterDate = todaysDate
@@ -230,7 +230,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		self.printView.string = letterString
 	}
 
-	func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
+	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
 		return true
 	}
 

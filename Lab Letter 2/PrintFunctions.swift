@@ -19,7 +19,7 @@ func generateIndividualResultString(theHeader: String, theLabs:[LabDataPosNeg], 
 		for lab in theLabs {
 			if !lab.controller.stringValue.isEmpty {
 				arrayCount+=1
-				if lab.controller.stringValue.containsString("Normal") {
+				if lab.controller.stringValue.contains("Normal") {
 					normCount+=1
 				} else {
 					let theString = "\(lab.outputTitle) \(lab.controller.stringValue)"
@@ -28,9 +28,9 @@ func generateIndividualResultString(theHeader: String, theLabs:[LabDataPosNeg], 
 			}
 		}
 		if (normCount == arrayCount) && (normCount != 0) {
-			return "\(theHeader.uppercaseString) results are all within normal range."
+			return "\(theHeader.uppercased()) results are all within normal range."
 		} else  if !theArray.isEmpty {
-			let preString = stringOfThreeFromArray(theArray)
+			let preString = stringOfThreeFromArray(startingArray: theArray)
 			result = "\(theHeader)\n\(preString)"
 			//result = "\(theHeader.uppercaseString)\n\(theArray.joinWithSeparator(tab))"
 			return result
@@ -45,7 +45,7 @@ func generateIndividualResultString(theHeader: String, theLabs:[LabDataPosNeg], 
 		}
 	}
 	if !theArray.isEmpty {
-		let preString = stringOfThreeFromArray(theArray)
+		let preString = stringOfThreeFromArray(startingArray: theArray)
 		result = "\(theHeader)\n\(preString)"
 		//result = "\(theHeader.uppercaseString)\n\(theArray.joinWithSeparator(tab))"
 	}
@@ -62,17 +62,17 @@ func generateSectionResultsString() {
 	let otherHeading = "Other"
 	
 	if let bloodCount = MyVariables.completeLabData?.returnBloodCount() {
-		let theBloodCountResults = generateIndividualResultString(bloodCountHeading, theLabs: bloodCount, checkForNorms: true)
+		let theBloodCountResults = generateIndividualResultString(theHeader: bloodCountHeading, theLabs: bloodCount, checkForNorms: true)
 		MyVariables.theLabLetter?.bloodCountResults = theBloodCountResults
 		}
 	if let liverFunction = MyVariables.completeLabData?.returnLiverFunction() {
-		MyVariables.theLabLetter?.liverResults = generateIndividualResultString(liverHeading, theLabs: liverFunction, checkForNorms: true)
+		MyVariables.theLabLetter?.liverResults = generateIndividualResultString(theHeader: liverHeading, theLabs: liverFunction, checkForNorms: true)
 	}
 	if let cmp = MyVariables.completeLabData?.returnCMP() {
-		MyVariables.theLabLetter?.cmpResults = generateIndividualResultString(cmpHeading, theLabs: cmp, checkForNorms: false)
+		MyVariables.theLabLetter?.cmpResults = generateIndividualResultString(theHeader: cmpHeading, theLabs: cmp, checkForNorms: false)
 	}
 	if let thyroid = MyVariables.completeLabData?.returnThyroid() {
-		MyVariables.theLabLetter?.thyroidResults = generateIndividualResultString(thyroidHeading, theLabs: thyroid, checkForNorms: false)
+		MyVariables.theLabLetter?.thyroidResults = generateIndividualResultString(theHeader: thyroidHeading, theLabs: thyroid, checkForNorms: false)
 	}
 	if let other = MyVariables.completeLabData?.returnOther() {
 		var otherArray = [String]()
@@ -84,11 +84,11 @@ func generateSectionResultsString() {
 				}
 			}
 			if !otherArray.isEmpty {
-				unlabeledLabResults = otherArray.joinWithSeparator(tab)
+				unlabeledLabResults = otherArray.joined(separator: tab)
 			}
 		}
 		
-		let regularOtherResults = generateIndividualResultString(otherHeading, theLabs: other, checkForNorms: false)
+		let regularOtherResults = generateIndividualResultString(theHeader: otherHeading, theLabs: other, checkForNorms: false)
 		
 		if !regularOtherResults.isEmpty {
 			if !unlabeledLabResults.isEmpty {
@@ -98,7 +98,7 @@ func generateSectionResultsString() {
 			}
 		} else if regularOtherResults.isEmpty {
 			if !unlabeledLabResults.isEmpty {
-				MyVariables.theLabLetter?.otherResults = otherHeading.uppercaseString + "\n" + unlabeledLabResults
+				MyVariables.theLabLetter?.otherResults = otherHeading.uppercased() + "\n" + unlabeledLabResults
 			}
 		}
 		
@@ -140,7 +140,7 @@ func generateDiabetesSectionResults() {
 	let diabetesString = "\(hA1cString)\(aveGlucoseString)\(returnOrNot)\(microAlbString)"
 	
 	if !diabetesString.isEmpty {
-		MyVariables.theLabLetter?.bloodSugarMicroResults = "\(diabetesHeading.uppercaseString)\n\(diabetesString)"
+		MyVariables.theLabLetter?.bloodSugarMicroResults = "\(diabetesHeading.uppercased())\n\(diabetesString)"
 	} else {
 		MyVariables.theLabLetter?.bloodSugarMicroResults = ""
 	}
@@ -202,7 +202,7 @@ func generateCholesterolSectionResults() {
 	}
 	
 	if !cholesterolArray.isEmpty {
-		let cholesterolResults = "CHOLESTEROL\n" + cholesterolArray.joinWithSeparator("\n")
+		let cholesterolResults = "CHOLESTEROL\n" + cholesterolArray.joined(separator: "\n")
 		MyVariables.theLabLetter?.cholesterolResults = cholesterolResults
 	}
 
@@ -216,22 +216,22 @@ func stringOfThreeFromArray(startingArray: [String]) -> String {
 	while initialArray.count > 0 {
 		if initialArray.count >= 3 {
 			var tempArray = [String]()
-			for i in 1...3 {
-				tempArray.append(initialArray.removeAtIndex(0))
+			for _ in 1...3 {
+				tempArray.append(initialArray.remove(at: 0))
 			}
-			let tempString = tempArray.joinWithSeparator("    ")
+			let tempString = tempArray.joined(separator: "    ")
 			arrayOfArrays.append(tempString)
 		} else {
 			var tempArray = [String]()
-			for i in 1...initialArray.count {
-				tempArray.append(initialArray.removeAtIndex(0))
+			for _ in 1...initialArray.count {
+				tempArray.append(initialArray.remove(at: 0))
 			}
-			let tempString = tempArray.joinWithSeparator("    ")
+			let tempString = tempArray.joined(separator: "    ")
 			arrayOfArrays.append(tempString)
 		}
 	}
 	
-	let stringResult = arrayOfArrays.joinWithSeparator("\n")
+	let stringResult = arrayOfArrays.joined(separator: "\n")
 	
 	return stringResult
 }

@@ -192,8 +192,8 @@ let lipaseHighF = 63.0
 let lipaseLowM = 16.0
 let lipaseHighM = 63.0
 
-let testosteroneLowF = 0.0
-let testosteroneHighF = 12.0
+let testosteroneLowF = 6.0
+let testosteroneHighF = 50.0
 let testosteroneLowM = 300.0
 let testosteroneHighM = 720.0
 

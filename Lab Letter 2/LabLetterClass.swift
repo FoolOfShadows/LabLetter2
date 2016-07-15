@@ -50,7 +50,7 @@ class LabLetter {
 			var normCount = 0
 			for lab in theLabs {
 				if !lab.controller.stringValue.isEmpty {
-					if lab.controller.stringValue.containsString("Normal") {
+					if lab.controller.stringValue.contains("Normal") {
 						normCount+=1
 					} else {
 						let theString = "\(lab.outputTitle) \(lab.controller.stringValue)"
@@ -61,7 +61,7 @@ class LabLetter {
 			if (normCount == theArray.count) && (normCount != 0) {
 				return "\(theHeader) results are all within normal range."
 			} else if !theArray.isEmpty {
-				let preString = stringOfThreeFromArray(theArray)
+				let preString = stringOfThreeFromArray(startingArray: theArray)
 				result = "\(theHeader)\n\(preString)"
 				return result
 			}
@@ -74,7 +74,7 @@ class LabLetter {
 			}
 		}
 		if !theArray.isEmpty {
-			let preString = stringOfThreeFromArray(theArray)
+			let preString = stringOfThreeFromArray(startingArray: theArray)
 			result = "\(theHeader)\n\(preString)"
 		}
 		return result
@@ -95,13 +95,13 @@ class LabLetter {
 				usedSections.append(section)
 			}
 		}
-		let letterBody = usedSections.joinWithSeparator("\n\n")
+		let letterBody = usedSections.joined(separator: "\n\n")
 		
 		let finalLetter = letterOpening + letterBody + letterClosing
 		
 		print(finalLetter)
 		
-		let pasteBoard = NSPasteboard.generalPasteboard()
+		let pasteBoard = NSPasteboard.general()
 		pasteBoard.clearContents()
 		pasteBoard.setString(finalLetter, forType: NSPasteboardTypeString)
 		
