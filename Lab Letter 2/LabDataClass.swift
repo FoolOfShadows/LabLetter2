@@ -20,7 +20,7 @@ class LabData {
 		self.identifyingText = idText
 	}
 	
-	func labRange(ptGender: String) -> String {
+	func labRange(_ ptGender: String) -> String {
 		return ""
 	}
 }
@@ -48,7 +48,7 @@ class LabDataWithHighLow: LabDataPosNeg {
 		super.init(controller: controller, idText: idText, outputTitle: outputTitle)
 	}
 	
-	override func labRange(ptGender: String) -> String {
+	override func labRange(_ ptGender: String) -> String {
 		var results = ""
 		if var theLabValue = self.labValue {
 			//Check if the string contains a less than or greater than sign
@@ -80,7 +80,7 @@ class LabDataWithHighLow: LabDataPosNeg {
 
 class LabDataTSH: LabDataWithHighLow {
 	
-	override func labRange(ptGender: String) -> String {
+	override func labRange(_ ptGender: String) -> String {
 		var results = ""
 		if var theLabValue = self.labValue {
 			//Check if the string contains a less than or greater than sign
@@ -122,7 +122,7 @@ class LabDataGlucose: LabDataWithHighLow {
 		super.init(controller: controller, idText: idText, highFemale: highFemale, lowFemale: lowFemale, highMale: highMale, lowMale: lowMale, outputTitle: outputTitle)
 	}
 	
-	override func labRange(ptGender: String) -> String {
+	override func labRange(_ ptGender: String) -> String {
 		var results = ""
 		if let theLabValue = self.labValue {
 			if let labAsDouble = Int(theLabValue) {

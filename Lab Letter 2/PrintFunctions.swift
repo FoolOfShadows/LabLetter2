@@ -8,7 +8,7 @@
 
 import Cocoa
 
-func generateIndividualResultString(theHeader: String, theLabs:[LabDataPosNeg], checkForNorms:Bool) ->String {
+func generateIndividualResultString(_ theHeader: String, theLabs:[LabDataPosNeg], checkForNorms:Bool) ->String {
 	var result = String()
 	var theArray = [String]()
 	//If the checkForNorms flag is true, develop the string to only report on 
@@ -30,7 +30,7 @@ func generateIndividualResultString(theHeader: String, theLabs:[LabDataPosNeg], 
 		if (normCount == arrayCount) && (normCount != 0) {
 			return "\(theHeader.uppercased()) results are all within normal range."
 		} else  if !theArray.isEmpty {
-			let preString = stringOfThreeFromArray(startingArray: theArray)
+			let preString = stringOfThreeFromArray(theArray)
 			result = "\(theHeader)\n\(preString)"
 			//result = "\(theHeader.uppercaseString)\n\(theArray.joinWithSeparator(tab))"
 			return result
@@ -45,7 +45,7 @@ func generateIndividualResultString(theHeader: String, theLabs:[LabDataPosNeg], 
 		}
 	}
 	if !theArray.isEmpty {
-		let preString = stringOfThreeFromArray(startingArray: theArray)
+		let preString = stringOfThreeFromArray(theArray)
 		result = "\(theHeader)\n\(preString)"
 		//result = "\(theHeader.uppercaseString)\n\(theArray.joinWithSeparator(tab))"
 	}
@@ -62,17 +62,17 @@ func generateSectionResultsString() {
 	let otherHeading = "Other"
 	
 	if let bloodCount = MyVariables.completeLabData?.returnBloodCount() {
-		let theBloodCountResults = generateIndividualResultString(theHeader: bloodCountHeading, theLabs: bloodCount, checkForNorms: true)
+		let theBloodCountResults = generateIndividualResultString(bloodCountHeading, theLabs: bloodCount, checkForNorms: true)
 		MyVariables.theLabLetter?.bloodCountResults = theBloodCountResults
 		}
 	if let liverFunction = MyVariables.completeLabData?.returnLiverFunction() {
-		MyVariables.theLabLetter?.liverResults = generateIndividualResultString(theHeader: liverHeading, theLabs: liverFunction, checkForNorms: true)
+		MyVariables.theLabLetter?.liverResults = generateIndividualResultString(liverHeading, theLabs: liverFunction, checkForNorms: true)
 	}
 	if let cmp = MyVariables.completeLabData?.returnCMP() {
-		MyVariables.theLabLetter?.cmpResults = generateIndividualResultString(theHeader: cmpHeading, theLabs: cmp, checkForNorms: false)
+		MyVariables.theLabLetter?.cmpResults = generateIndividualResultString(cmpHeading, theLabs: cmp, checkForNorms: false)
 	}
 	if let thyroid = MyVariables.completeLabData?.returnThyroid() {
-		MyVariables.theLabLetter?.thyroidResults = generateIndividualResultString(theHeader: thyroidHeading, theLabs: thyroid, checkForNorms: false)
+		MyVariables.theLabLetter?.thyroidResults = generateIndividualResultString(thyroidHeading, theLabs: thyroid, checkForNorms: false)
 	}
 	if let other = MyVariables.completeLabData?.returnOther() {
 		var otherArray = [String]()
@@ -88,7 +88,7 @@ func generateSectionResultsString() {
 			}
 		}
 		
-		let regularOtherResults = generateIndividualResultString(theHeader: otherHeading, theLabs: other, checkForNorms: false)
+		let regularOtherResults = generateIndividualResultString(otherHeading, theLabs: other, checkForNorms: false)
 		
 		if !regularOtherResults.isEmpty {
 			if !unlabeledLabResults.isEmpty {
@@ -209,7 +209,7 @@ func generateCholesterolSectionResults() {
 }
 
 
-func stringOfThreeFromArray(startingArray: [String]) -> String {
+func stringOfThreeFromArray(_ startingArray: [String]) -> String {
 	var arrayOfArrays: [String] = [String]()
 	var initialArray = startingArray
 	

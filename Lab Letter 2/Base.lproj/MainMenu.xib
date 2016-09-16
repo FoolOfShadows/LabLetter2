@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G1004" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11198.2"/>
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
@@ -749,7 +749,7 @@
                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                         </buttonCell>
                         <connections>
-                            <action selector="takeProcessWithSender:" target="Voe-Tx-rLC" id="Pr3-Es-vHs"/>
+                            <action selector="takeProcess:" target="Voe-Tx-rLC" id="fyL-oY-uOC"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QeJ-j9-3y1">
@@ -770,7 +770,7 @@
                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                         </buttonCell>
                         <connections>
-                            <action selector="takeClearWithSender:" target="Voe-Tx-rLC" id="S11-5Z-aQd"/>
+                            <action selector="takeClear:" target="Voe-Tx-rLC" id="B1D-NE-WQF"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ast-hq-4SU">
@@ -783,7 +783,7 @@
                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                         </buttonCell>
                         <connections>
-                            <action selector="takePopulateWithSender:" target="Voe-Tx-rLC" id="Gnp-B0-2W8"/>
+                            <action selector="takePopulate:" target="Voe-Tx-rLC" id="1K2-8a-4JO"/>
                         </connections>
                     </button>
                     <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="MQi-f4-j3M">
@@ -849,10 +849,8 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Blood Count" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="Cjy-2w-kIk">
+                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Blood Count" translatesAutoresizingMaskIntoConstraints="NO" id="Cjy-2w-kIk">
                         <rect key="frame" x="17" y="524" width="207" height="153"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="sdw-kc-Qlu">
@@ -933,10 +931,8 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="CBC" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="NOp-RR-JVw">
+                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="CBC" translatesAutoresizingMaskIntoConstraints="NO" id="NOp-RR-JVw">
                         <rect key="frame" x="226" y="474" width="221" height="203"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="ecn-eg-Xzr">
@@ -1053,10 +1049,8 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Liver Function" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="Dwi-1e-rNL">
+                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Liver Function" translatesAutoresizingMaskIntoConstraints="NO" id="Dwi-1e-rNL">
                         <rect key="frame" x="459" y="422" width="248" height="255"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="Egw-h5-moa">
@@ -1209,10 +1203,8 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Cholesterol" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="WAq-wj-bHE">
+                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Cholesterol" translatesAutoresizingMaskIntoConstraints="NO" id="WAq-wj-bHE">
                         <rect key="frame" x="226" y="267" width="228" height="203"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="p7d-9g-vRg">
@@ -1329,10 +1321,8 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Thyroid" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="htL-jI-d0N">
+                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Thyroid" translatesAutoresizingMaskIntoConstraints="NO" id="htL-jI-d0N">
                         <rect key="frame" x="17" y="258" width="201" height="127"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="5bx-ZG-JEs">
@@ -1395,10 +1385,8 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Diabetic Labs" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="u9B-xT-Rtc">
+                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Diabetic Labs" translatesAutoresizingMaskIntoConstraints="NO" id="u9B-xT-Rtc">
                         <rect key="frame" x="17" y="393" width="200" height="127"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="Xue-aj-MUx">
@@ -1461,10 +1449,8 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Vitamin Levels" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="Rc0-8x-mkr">
+                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Vitamin Levels" translatesAutoresizingMaskIntoConstraints="NO" id="Rc0-8x-mkr">
                         <rect key="frame" x="709" y="462" width="220" height="215"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="8bh-DG-uEK">
@@ -1581,10 +1567,8 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="APp-eG-HK5">
+                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="APp-eG-HK5">
                         <rect key="frame" x="459" y="201" width="248" height="219"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="MRU-mn-Xyw">
@@ -1701,10 +1685,8 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="h0w-lg-jze">
+                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="h0w-lg-jze">
                         <rect key="frame" x="709" y="268" width="220" height="192"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="KrK-0O-eMJ">
@@ -1803,10 +1785,8 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="ldS-f2-hxt">
+                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="ldS-f2-hxt">
                         <rect key="frame" x="17" y="95" width="294" height="161"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="U14-AW-zNH">
@@ -1887,10 +1867,8 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Other" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="zfF-Ge-oCk">
+                    <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Other" translatesAutoresizingMaskIntoConstraints="NO" id="zfF-Ge-oCk">
                         <rect key="frame" x="366" y="57" width="563" height="140"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="Djt-Ft-4HD">
@@ -2007,8 +1985,6 @@
                                 </textField>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
                 </subviews>
             </view>

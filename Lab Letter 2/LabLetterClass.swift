@@ -43,7 +43,7 @@ class LabLetter {
 		otherResults = String()
 	}
 	
-	func generateSectionResults(theHeader: String, theLabs: [LabDataPosNeg], checkForNorms: Bool) -> String {
+	func generateSectionResults(_ theHeader: String, theLabs: [LabDataPosNeg], checkForNorms: Bool) -> String {
 		var result = String()
 		var theArray = [String]()
 		if checkForNorms == true {
@@ -61,7 +61,7 @@ class LabLetter {
 			if (normCount == theArray.count) && (normCount != 0) {
 				return "\(theHeader) results are all within normal range."
 			} else if !theArray.isEmpty {
-				let preString = stringOfThreeFromArray(startingArray: theArray)
+				let preString = stringOfThreeFromArray(theArray)
 				result = "\(theHeader)\n\(preString)"
 				return result
 			}
@@ -74,7 +74,7 @@ class LabLetter {
 			}
 		}
 		if !theArray.isEmpty {
-			let preString = stringOfThreeFromArray(startingArray: theArray)
+			let preString = stringOfThreeFromArray(theArray)
 			result = "\(theHeader)\n\(preString)"
 		}
 		return result

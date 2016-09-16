@@ -81,11 +81,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	var letterString = ""
 	
-	@IBAction func takeClear(sender: NSButton) {
+	@IBAction func takeClear(_ sender: NSButton) {
 		resetFormFields()
 	}
 	
-    @IBAction func takeProcess(sender: NSButton) {
+    @IBAction func takeProcess(_ sender: NSButton) {
 		generateSectionResultsString()
 		generateDiabetesSectionResults()
 		generateCholesterolSectionResults()
@@ -95,21 +95,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		}
     }
     
-	@IBAction func takePopulate(sender: AnyObject) {
+	@IBAction func takePopulate(_ sender: AnyObject) {
 		//Extract the raw data from the PracticeFusion text in the clipboard and set the fields of the form accordingly
 		if let theCompleteLabData = MyVariables.completeLabData {
 			if let thisPatient = MyVariables.thePatient {
-				extractValues(theLabData: theCompleteLabData.returnAllTheLabsButHGB(), thePatient: thisPatient, wordsToRemove: extraPhrases)
+				extractValues(theCompleteLabData.returnAllTheLabsButHGB(), thePatient: thisPatient, wordsToRemove: extraPhrases)
 			}
 		}
 		if let theHGBLabData = MyVariables.completeLabData?.hgbLab {
 			if let thisPatient = MyVariables.thePatient {
-				extractValues(theLabData: [theHGBLabData], thePatient: thisPatient, wordsToRemove: moreExtraPhrases)
+				extractValues([theHGBLabData], thePatient: thisPatient, wordsToRemove: moreExtraPhrases)
 			}
 		}
 	}
 	
-	@IBAction func takePrint(sender: AnyObject) {
+	@IBAction func takePrint(_ sender: AnyObject) {
 	}
     
 
@@ -203,7 +203,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		}
     }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
     
@@ -225,7 +225,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		}
 	}
 	
-	@IBAction func takeShowResultsWindow(sender: AnyObject) {
+	@IBAction func takeShowResultsWindow(_ sender: AnyObject) {
 		winPrint.makeKeyAndOrderFront(self)
 		self.printView.string = letterString
 	}

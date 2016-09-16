@@ -55,10 +55,11 @@ let calciumHighF = 10.5
 let calciumLowM = 8.5
 let calciumHighM = 10.5
 
-let proteinLowF = 6.0
-let proteinHighF = 8.4
-let proteinLowM = 6.0
-let proteinHighM = 8.4
+//Protein ranges updated as of 8/29/16 per CPL
+let proteinLowF = 6.1
+let proteinHighF = 8.3
+let proteinLowM = 6.1
+let proteinHighM = 8.3
 
 let albuminLowF = 2.9
 let albuminHighF = 5.0
@@ -70,30 +71,34 @@ let globHighF = 3.8
 let globLowM = 2.0
 let globHighM = 3.8
 
-let agRatioLowF = 0.9
-let agRatioHighF = 2.5
-let agRatioLowM = 0.9
-let agRatioHighM = 2.5
+//Calc A/G Ratio ranges updated as of 9/7/16 per CPL
+let agRatioLowF = 1.0
+let agRatioHighF = 2.6
+let agRatioLowM = 1.0
+let agRatioHighM = 2.6
 
 let biliLowF = 0.1
 let biliHighF = 1.3
 let biliLowM = 0.1
 let biliHighM = 1.3
 
-let alkPhosLowF = 30.0
-let alkPhosHighF = 132.0
-let alkPhosLowM = 30.0
-let alkPhosHighM = 132.0
+//Alkaline Phosphatase ranges updated as of 8/29/16 per CPL
+let alkPhosLowF = 38.0
+let alkPhosHighF = 146.0
+let alkPhosLowM = 38.0
+let alkPhosHighM = 146.0
 
-let astLowF = 5.0
-let astHighF = 35.0
-let astLowM = 5.0
-let astHighM = 35.0
+//AST ranges updated as of 8/29/16 per CPL
+let astLowF = 9.0
+let astHighF = 40.0
+let astLowM = 9.0
+let astHighM = 40.0
 
-let altLowF = 7.0
-let altHighF = 56.0
-let altLowM = 7.0
-let altHighM = 56.0
+//Protein ranges updated as of 8/29/16 per CPL
+let altLowF = 5.0
+let altHighF = 40.0
+let altLowM = 5.0
+let altHighM = 40.0
 
 let ldlConcLowF = 0.0
 let ldlConcHighF = 1000.0
@@ -125,8 +130,9 @@ let tshHighF = 4.2
 let tshLowM = 0.3
 let tshHighM = 4.2
 
-let freeT3LowF = 2.3
-let freeT3HighF = 4.2
+//Free T3 ranges for women updated 9/16/16 as found on lab results from CPL
+let freeT3LowF = 2.0
+let freeT3HighF = 4.4
 let freeT3LowM = 2.3
 let freeT3HighM = 4.2
 
