@@ -91,14 +91,14 @@ let alkPhosHighM = 146.0
 //AST ranges updated as of 8/29/16 per CPL
 let astLowF = 9.0
 let astHighF = 40.0
-let astLowM = 9.0
-let astHighM = 40.0
+let astLowM = 5.0
+let astHighM = 35.0
 
 //Protein ranges updated as of 8/29/16 per CPL
-let altLowF = 5.0
-let altHighF = 40.0
-let altLowM = 5.0
-let altHighM = 40.0
+let altLowF = 7.0
+let altHighF = 56.0
+let altLowM = 7.0
+let altHighM = 56.0
 
 let ldlConcLowF = 0.0
 let ldlConcHighF = 1000.0
